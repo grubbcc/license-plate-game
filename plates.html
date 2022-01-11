@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Anagrams</title> 
+
+    <style>
+        
+    body {
+        -ms-overflow-style: none; /* for Internet Explorer, Edge */
+        scrollbar-width: none; /* for Firefox */
+        overflow-x: hidden;
+        overflow-y: hidden; 
+    }
+    
+    body::-webkit-scrollbar {
+        display: none; /* for Chrome, Safari, and Opera */
+    }    
+    
+    @font-face{
+        font-family:"penitentiary-gothic-fill-regular";
+        src:url("fonts/E-phemera - Penitentiary Gothic Fill.ttf") 
+        format("woff"), url("fonts/E-phemera - Penitentiary Gothic Fill.ttf") 
+        format("opentype"), url("fonts/E-phemera - Penitentiary Gothic Fill.ttf") 
+        format("truetype");
+    } 
+    
+    .container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-perspective: 70px;
+                perspective: 70px;
+        perspective-origin: 40% 20%;
+    }
+
+    .container > * {
+        position: absolute;
+        top: 50%;
+        -webkit-animation: moveOnZ forwards 10s;
+                animation: moveOnZ forwards 10s;
+    }
+    
+    #left {
+        left: 0%;
+    }
+
+    #right {
+        right: 0%;
+    }
+
+
+    .plate {
+    }
+
+    .lettering {
+        position: absolute;
+        top: 20%;
+        width: 100%;
+        transform: translateY(-40%);
+        text-align: center;
+        font-size: 32px;
+        font-family: "penitentiary-gothic-fill-regular";
+        color: red;
+    }
+    
+    @-webkit-keyframes moveOnZ {
+        from {
+            -webkit-transform: translateZ(-500px);
+                    transform: translateZ(-500px);
+        }
+        to {
+            -webkit-transform: translateZ(50px);
+                    transform: translateZ(50px);
+        }
+    }
+
+    @keyframes moveOnZ {
+        from {
+            -webkit-transform: translateZ(-500px);
+                    transform: translateZ(-500px);
+        }
+        50% {
+            opacity: 100;
+        }
+        to {
+            -webkit-transform: translateZ(50px);
+                    transform: translateZ(50px);
+            opacity: 0;
+        }
+    }
+
+
+    </style>
+    
+    <script>
+
+    
+        /**
+         * 
+         */
+         
+        function startGame() {
+            
+            nextPlate('right');
+            setTimeout(() => loopRight(), 5000);
+            setTimeout(() => loopRight(), 10000);
+        
+    
+            function loopLeft() {
+                var rand = Math.round(7000*Math.random()) + 10000;
+                setTimeout(function() {
+                        nextPlate('left');
+                        loopLeft();  
+                }, rand);
+            };
+            function loopRight() {
+
+                setTimeout(function() {
+                        nextPlate('right');
+                        loopRight();  
+                }, Math.round(7000*Math.random()) + 10000);
+            };
+            
+        }
+        
+
+        
+        /**
+         * 
+         */
+        
+        function nextPlate(selector) {
+
+            let nextDigits = Math.floor(Math.random() * 1000).toString().padStart(3,0);
+            let nextChars = "";
+            for(i = 0; i < 3; i++) {
+                nextChars += (String.fromCharCode(65 + Math.floor(Math.random() * 26)));
+            }
+            
+            const nextPlate = document.getElementById(selector);
+            nextPlate.querySelector('.lettering').innerHTML = nextChars + " " + nextDigits;
+            
+            nextPlate.style.animation = 'none';
+            nextPlate.offsetHeight; /* trigger reflow */
+            nextPlate.style.animation = null;
+        }
+        
+        
+    </script>
+</head>
+
+
+<body>
+    <h4>License plate game</h4>
+    <button onclick=startGame()>Start game</button><br>
+    
+    <div class="container">
+    
+        <div class="frame" id="left">
+            <img class="plate" src="https://www.seattlephysicstutor.com/plates/IL.jpg" width='100' height='50'>
+            <div class="lettering left">
+                <p>ABC 123</p>
+            </div>
+        </div>
+            
+        <div class="frame" id="right">
+            <img class="plate" src="https://www.seattlephysicstutor.com/plates/IL.jpg" width='100' height='50'>
+            <div class="lettering">
+                <p>ABC 123</p>
+            </div>
+        </div>
+        
+    </div>
+ 
+</body>
+
+
+
+</html>
