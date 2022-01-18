@@ -5,20 +5,38 @@
   <meta charset="utf-8">
   <style>
   
-    * {
+    :not(.frame) {
         overflow: hidden;
+    }
+
+    div.explode-wrapper {
+        display: flex;
+        justify-content: center;        
     }
   
     .container {
         -ms-overflow-style: none;
         scrollbar-width: none;
-        height: 100%;
         width: 100%;
+        height: 100%;
+
     }
     
     .controls {
         position: absolute;
         padding: 10px;
+    }
+    
+    .entry-container {
+        display: flex;
+        justify-content: center; /* center horizontally */
+    }
+
+    #entry {
+        margin-top: 3%;
+        margin-bottom: 90%;
+        opacity: 0;
+   
     }
 
     .backdrop {
@@ -58,19 +76,20 @@
         animation-duration: 15s;
     }
     
-    
-    
     .animate-left {
         animation-name: approach-left;
     }
     .animate-right {
         animation-name: approach-right;
     }
+    .paused {
+        animation-play-state: paused;
+    }
     
     @keyframes approach-center {
       from { transform: scale(0.04); }
       to { transform: translateY(23px) scale(1); }
-    }    
+    }
 
     @keyframes approach-left {
       from { transform: translate(49vw, 52vh) translate(-60px, -30px) scale(0.08); }
@@ -118,16 +137,38 @@
   </style>
 
     <script type="text/javascript" src="trie.js"></script>
+    <script type="text/javascript" src="jquery.imgexplode.js"></script>
     
     <script>
+
         const lexicon = new Trie();
-        CSW19.forEach(item => lexicon.insert(item));
+        fetch(new Request('CSW19.json'))
+            .then(response => response.json())
+            .then(data => data.forEach(item => lexicon.insert(item)));
     
+    
+        const topPlays = new Map();
+        fetch("CSW21-top-plays.json")
+            .then(response => response.json())
+            .then(data => Object.keys(data).forEach(key => topPlays.set(key, data[key])));
+
+
         /**
          * 
          */
          
         function startGame() {
+            console.log(lexicon);
+            console.log(lexicon.contains("HELLO"));
+            document.getElementById('start-button').innerHTML = 'Pause game';
+            const entry = document.getElementById("entry");
+            entry.style.opacity = 1;
+            entry.addEventListener("keyup", function(event) {
+                if (event.keyCode === 13) {
+                    submit(entry.value.toUpperCase());
+                    entry.value="";
+                }
+            });
             
             nextPlate('animate-left');
             setTimeout(() => loopLeft(), Math.round(7000*Math.random()));
@@ -136,15 +177,15 @@
     
             function loopLeft() {
                 setTimeout(function() {
-                        nextPlate('animate-left');
-                        loopLeft();  
+                    nextPlate('animate-left');
+                    loopLeft();  
                 }, Math.round(7000*Math.random()) + 7000);
             };
             
             function loopRight() {
                 setTimeout(function() {
-                        nextPlate('animate-right');
-                        loopRight();  
+                    nextPlate('animate-right');
+                    loopRight();  
                 }, Math.round(7000*Math.random()) + 7000);
             };
             
@@ -157,11 +198,14 @@
          */
         
         function nextPlate(selector) {
-
+            
             let nextDigits = Math.floor(Math.random() * 1000).toString().padStart(3,0);
             let nextChars = "";
-            for(i = 0; i < 3; i++) {
-                nextChars += (String.fromCharCode(65 + Math.floor(Math.random() * 26)));
+             while(!topPlays.has(nextChars)) {
+                nextChars = "";
+                for(i = 0; i < 3; i++) {
+                    nextChars += (String.fromCharCode(65 + Math.floor(Math.random() * 26)));
+                }
             }
 
             const nextLettering = document.createElement("p")
@@ -171,18 +215,90 @@
             const nextPlate = document.createElement("img");
             nextPlate.className ='plate';
             nextPlate.setAttribute('src', "https://www.seattlephysicstutor.com/plates/IL.jpg");
-            
+
+
             const nextFrame = document.createElement("div");
             nextFrame.classList.add('frame', selector);
-
             nextFrame.appendChild(nextPlate);
             nextFrame.appendChild(nextLettering);
-    
+            nextFrame.setAttribute('letters', nextChars);
+            nextFrame.setAttribute('bestPlay', topPlays.get(nextChars));
+            console.log(nextFrame.getAttribute('bestPlay'));
             document.querySelector('.container').appendChild(nextFrame);
-            
+     
+            setTimeout(function() { nextFrame.remove(); }, 120000);
         }
         
+
+
+        /**
+         * 
+         */
+
+	    function matches(plate, entry) {
+		 
+    		while(entry.length >= plate.length && plate.length > 0) {
+    
+    			if (plate.charAt(0) === entry.charAt(0)) {
+    				plate = plate.substring(1);
+    			}
+    			entry = entry.substring(1);
+    		}
+    		return plate.length === 0;
+    	}
+    
+    	 
+    	
+        /**
+         * 
+         */
         
+        function submit(entry) {
+            if(lexicon.contains(entry.toUpperCase())) {
+
+                Array.from(document.getElementsByClassName('frame')).forEach((frame) => {
+                    
+        			if(frame.getAttribute('bestPlay') === entry.toUpperCase()) {
+
+                        let target = new ImgExplode(frame.querySelector('.plate'));
+
+                        target.explodeRestore();
+                        setTimeout(function () {
+                            frame.querySelector('.lettering').remove();
+                            target.explode({
+                                maxWidth: 15,
+                                minWidth: 5,
+                                radius: 231,
+                                release: false,
+                                recycle: false,
+                                explodeTime: 320,
+                                canvas: true,
+                                round: false,
+                                maxAngle: 360,
+                                gravity: 10,
+                                groundDistance: 100,
+                            });
+                        }, 300)
+        			}
+        			
+        			else if(matches(frame.getAttribute('letters'), entry.toUpperCase())) {
+        				if(frame.getAttribute('bestPlay').length === entry.length) {
+        					console.log("shortest play");
+        				}
+        				else {
+        					console.log("match");
+        				}
+        			}
+        			else {
+        				console.log("no match");
+        			}
+        		});
+            }
+            else {
+                console.log("not a word");
+            }
+        }
+
     </script>
     
 </head>    
@@ -190,9 +306,10 @@
 <div class='container'>
   <div class='controls'>
     <h4>License plate game</h4>
-    <button onclick=startGame()>Start game</button>
+    <button id="start-button" onclick=startGame()>Start game</button>
   </div>
-
+ 
+    
   <svg class='backdrop' width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
     <polygon class='road' points="0,50 100,50 100,100 0,100"/>
     <polygon class='sky' points="0,0 100,00 100,50 0,50"/>
@@ -205,7 +322,9 @@
   </svg>
 
 </div>
-
+<div class='entry-container'>
+  <input type="text" id="entry" placeholder="Enter a word" onfocus="this.value=''; this.placeholder=''">
+</div>
   
   
 </html>
