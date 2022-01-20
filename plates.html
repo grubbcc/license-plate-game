@@ -3,15 +3,33 @@
     
 <head>
   <meta charset="utf-8">
+  <title>License plate game</title>
   <style>
   
-    :not(.frame) {
-        overflow: hidden;
+  
+    body {
+        margin:0;
+        padding:0
     }
+    
+    * {
+        white-space: nowrap;
+    }
+  
+    :not(.frame) { overflow: hidden; }
 
     div.explode-wrapper {
         display: flex;
         justify-content: center;        
+    }
+    
+    .hidden {
+        
+    }
+    
+    #start-button {
+        font-size: 14px;
+        text-align: center;
     }
   
     .container {
@@ -19,25 +37,18 @@
         scrollbar-width: none;
         width: 100%;
         height: 100%;
-
     }
     
     .controls {
+        border-collapse: collapse;
+        width: 100%;
+        table-layout: fixed;
         position: absolute;
-        padding: 10px;
-    }
-    
-    .entry-container {
-        display: flex;
-        justify-content: center; /* center horizontally */
+        vertical-align: top;
+        padding: 3px;
     }
 
-    #entry {
-        margin-top: 3%;
-        margin-bottom: 90%;
-        opacity: 0;
-   
-    }
+    #entry { opacity: 0; }
 
     .backdrop {
       position: absolute;
@@ -72,18 +83,64 @@
         width: 120px;
         height: 60px;
         animation-timing-function: cubic-bezier(1,.2,.95,.6);
+        animation-iteration-count: 1;
         animation-fill-mode: forwards;
         animation-duration: 15s;
     }
     
-    .animate-left {
-        animation-name: approach-left;
+    .plate {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
     }
-    .animate-right {
-        animation-name: approach-right;
+
+    .lettering {
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 0;
+        margin-bottom: 10px;
+        text-align: center;
+        line-height: 50px;
+        font-size: 40px;
+        font-family: "penitentiary-gothic-fill-regular";
+        color: red;
     }
-    .paused {
-        animation-play-state: paused;
+    
+    .scoreAlert {
+        color: orange;
+        font-family: sans-serif;
+        font-size: 60px;
+        position: absolute;
+        transform: translate(100%, -50%);
+        animation-name: fade-up;
+        animation-duration: 3s;
+        animation-iteration-count: 1;
+        animation-timing-function: ease-out;
+    }
+    
+    .roadside {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        transform: translate(-50%, -50%);
+        animation-name: approach-side;
+        animation-timing-function: cubic-bezier(1,.2,.95,.6);
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+        animation-duration: 60s;        
+    }
+    
+    .animate-left { animation-name: approach-left; }
+    .animate-right { animation-name: approach-right; }
+    .paused { animation-play-state: paused; }
+
+    @keyframes approach-side {
+      from { transform: translate(54vw, 51vh) translate(-60px, -60px) scale(0.04); }
+      to { transform: translate(174vw, 81vh) translate(-60px, -60px) scale(1); }
     }
     
     @keyframes approach-center {
@@ -105,25 +162,17 @@
       to { transform: translate(75vw, 100vh) translate(-60px, -30px) scale(1);
           opacity: 0; }
     }
-      
-    .plate {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
+    
 
-    .lettering {
-        position: absolute;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 0;
-        margin-bottom: 10px;
-        text-align: center;
-        line-height: 50px;
-        font-size: 40px;
-        font-family: "penitentiary-gothic-fill-regular";
-        color: red;
+    @keyframes fade-up {
+        from {
+            top: -50%;
+            opacity: 1;
+        }
+        to {
+            top: -200%;
+            opacity: 0;
+        }
     }
     
     @font-face{
@@ -136,31 +185,71 @@
       
   </style>
 
-    <script type="text/javascript" src="trie.js"></script>
-    <script type="text/javascript" src="jquery.imgexplode.js"></script>
+    <script type="text/javascript" src="/lib/trie.js"></script>
+    <script type="text/javascript" src="/lib/imgexplode.js"></script>
     
     <script>
 
-        const lexicon = new Trie();
-        fetch(new Request('CSW19.json'))
-            .then(response => response.json())
-            .then(data => data.forEach(item => lexicon.insert(item)));
-    
-    
+
+        //Load dictionary
+
+        //Load top plays
         const topPlays = new Map();
-        fetch("CSW21-top-plays.json")
+        fetch("/dict/CSW21-top-plays.json")
             .then(response => response.json())
             .then(data => Object.keys(data).forEach(key => topPlays.set(key, data[key])));
 
+        const lexicon = new Trie();
+        fetch(new Request('/dict/CSW19.json'))
+            .then(response => response.json())
+            .then(data => data.forEach(item => lexicon.insert(item)))
+            .then(() => {
+                document.getElementById('start-button').innerHTML = 'Start game';
+                document.getElementById('start-button').disabled = false;
+            });
+    
+        let gameActive = false;
+        let score = 0;
+        let accuracy = [0, 0];
 
         /**
          * 
          */
-         
+  
+        function loopLeft() {
+            leftLoop = setTimeout(function() {
+                if(!gameActive) return;
+                nextPlate('animate-left');
+                loopLeft();  
+            }, Math.round(7000*Math.random()) + 7000);
+        };
+        
+        function loopRight() {
+            setTimeout(function() {
+                if(!gameActive) return;
+                nextPlate('animate-right');
+                loopRight();  
+            }, Math.round(7000*Math.random()) + 7000);
+        
+        };
+        
+        function loopSigns() {
+            signsLoop = setTimeout(function() {
+                nextSign();
+                loopSigns();
+            }, Math.round(70000*Math.random()) + 70000);
+        };
+
+        /**
+         *
+         */
+        
         function startGame() {
-            console.log(lexicon);
-            console.log(lexicon.contains("HELLO"));
-            document.getElementById('start-button').innerHTML = 'Pause game';
+            
+            gameActive = true;
+            
+            document.getElementById('start-button').disabled = true;
+            document.getElementById('start-button').style.opacity = 0;
             const entry = document.getElementById("entry");
             entry.style.opacity = 1;
             entry.addEventListener("keyup", function(event) {
@@ -173,24 +262,62 @@
             nextPlate('animate-left');
             setTimeout(() => loopLeft(), Math.round(7000*Math.random()));
             setTimeout(() => loopRight(), Math.round(7000*Math.random()) + 7000);
-        
-    
-            function loopLeft() {
-                setTimeout(function() {
-                    nextPlate('animate-left');
-                    loopLeft();  
-                }, Math.round(7000*Math.random()) + 7000);
-            };
+            loopSigns();
             
-            function loopRight() {
-                setTimeout(function() {
-                    nextPlate('animate-right');
-                    loopRight();  
-                }, Math.round(7000*Math.random()) + 7000);
-            };
-            
+            setTimer();
         }
         
+
+        
+        /**
+         * 
+         */ 
+        
+        function setTimer() {
+            
+            let minsLeft = 5;
+            let secsLeft = 0;
+            const startTime = Date.now();
+            
+            const timer = setInterval(function() {
+                let millisElapsed = Date.now() - startTime;
+                document.getElementById('timer').innerHTML = minsLeft + ":" + secsLeft.toString().padStart(2,0);
+                if(--secsLeft < 0) {
+                    if(--minsLeft < 0) {
+                        clearInterval(timer);
+                        endGame();
+                    }
+                    else {
+                        secsLeft += 60;
+                    }
+                }
+
+            }, 500);
+        }
+        
+        /**
+         * 
+         */
+         
+        function endGame() {
+            gameActive = false;
+            document.getElementById('timer').innerHTML = "GAME OVER";
+            document.querySelectorAll('.frame').forEach(frame => explode(frame));
+            document.getElementById('start-button').innerHTML = 'Play again';
+            document.getElementById('start-button').style.opacity = 1;
+            document.getElementById('start-button').disabled = false;
+        }
+        
+        /**
+         * 
+         */
+         
+         function nextSign() {
+             const nextSign = document.createElement('img');
+             nextSign.className = 'roadside';
+             nextSign.setAttribute('src','https://www.seattlephysicstutor.com/images/twine.png');
+             document.querySelector('.container').appendChild(nextSign);
+         }
 
         
         /**
@@ -208,27 +335,79 @@
                 }
             }
 
-            const nextLettering = document.createElement("p")
+            const nextLettering = document.createElement("p");
             nextLettering.className = 'lettering';            
             nextLettering.innerHTML = nextChars + " " + nextDigits;
             
             const nextPlate = document.createElement("img");
             nextPlate.className ='plate';
-            nextPlate.setAttribute('src', "https://www.seattlephysicstutor.com/plates/IL.jpg");
-
+            nextPlate.setAttribute('src', "/plates/IL.jpg");
 
             const nextFrame = document.createElement("div");
             nextFrame.classList.add('frame', selector);
             nextFrame.appendChild(nextPlate);
             nextFrame.appendChild(nextLettering);
             nextFrame.setAttribute('letters', nextChars);
+            nextFrame.setAttribute('prevScore', 0);
             nextFrame.setAttribute('bestPlay', topPlays.get(nextChars));
-            console.log(nextFrame.getAttribute('bestPlay'));
+   //       console.log(nextFrame.getAttribute('bestPlay'));
             document.querySelector('.container').appendChild(nextFrame);
      
-            setTimeout(function() { nextFrame.remove(); }, 120000);
+            setTimeout(function() { 
+                nextFrame.remove() 
+                accuracy[1] += 3;
+                document.getElementById('accuracy').innerHTML = 'Accuracy: ' + Math.round(100*accuracy[0]/accuracy[1]) + '%';
+            }, 17000);
         }
         
+        /**
+         * 
+         */
+
+        function doScore(frame, points) {
+            if(points >= 0) {
+                frame.setAttribute('prevScore', points + Number(frame.getAttribute('prevScore')));
+                const scoreAlert = document.createElement('div');
+                scoreAlert.className = 'scoreAlert';
+                scoreAlert.innerHTML = '+' + points;
+                frame.appendChild(scoreAlert);
+                
+                score += points;
+                accuracy[0] += points;
+                document.getElementById('score').innerHTML = 'Score: ' + score;
+                
+                setTimeout(function() {
+                    scoreAlert.remove();
+                }, 3000);
+            }
+        }
+
+        
+        /**
+         * 
+         */
+
+        function explode(frame) {
+            let target = new ImgExplode(frame.querySelector('.plate'));
+
+            setTimeout(function () {
+                frame.querySelector('.lettering').remove();
+                target.explode({
+                    maxWidth: 25,
+                    minWidth: 5,
+                    radius: 231,
+                    release: false,
+                    recycle: false,
+                    explodeTime: 420,
+                    canvas: true,
+                    round: false,
+                    maxAngle: 360,
+                    gravity: 5,
+                    groundDistance: 10,
+                });
+            }, 300);
+        }
+         
 
 
         /**
@@ -256,46 +435,26 @@
         function submit(entry) {
             if(lexicon.contains(entry.toUpperCase())) {
 
-                Array.from(document.getElementsByClassName('frame')).forEach((frame) => {
-                    
+                Array.from(document.getElementsByClassName('frame')).forEach(frame => {
+                    let prevScore = Number(frame.getAttribute('prevScore'));
         			if(frame.getAttribute('bestPlay') === entry.toUpperCase()) {
-
-                        let target = new ImgExplode(frame.querySelector('.plate'));
-
-                        target.explodeRestore();
-                        setTimeout(function () {
-                            frame.querySelector('.lettering').remove();
-                            target.explode({
-                                maxWidth: 15,
-                                minWidth: 5,
-                                radius: 231,
-                                release: false,
-                                recycle: false,
-                                explodeTime: 320,
-                                canvas: true,
-                                round: false,
-                                maxAngle: 360,
-                                gravity: 10,
-                                groundDistance: 100,
-                            });
-                        }, 300)
+        			    
+        			    //equal in length to best play
+                        doScore(frame, 3 - prevScore);
+                        explode(frame);
         			}
-        			
         			else if(matches(frame.getAttribute('letters'), entry.toUpperCase())) {
+
         				if(frame.getAttribute('bestPlay').length === entry.length) {
-        					console.log("shortest play");
+        				    
+        	    		    //equal in length to best play
+        					doScore(frame, 2 - prevScore);
         				}
         				else {
-        					console.log("match");
+        					doScore(frame, 1 - prevScore);
         				}
         			}
-        			else {
-        				console.log("no match");
-        			}
         		});
-            }
-            else {
-                console.log("not a word");
             }
         }
 
@@ -304,10 +463,45 @@
 </head>    
 
 <div class='container'>
-  <div class='controls'>
-    <h4>License plate game</h4>
-    <button id="start-button" onclick=startGame()>Start game</button>
-  </div>
+    <table class='controls'>
+
+   <tr>
+        <td width='25%'>
+            <h4 style>License plate game</h4>
+        </td>
+
+        <td width="50%">
+            <input type="radio" id="words" name="lexicon" value="CSW" checked="checked">
+            <label for="words">CSW21</label>
+            <input type="radio" id="words" name="lexicon" value="NWL">
+            <label for="words">NWL2020</label>
+            <input type="radio" id="words" name="lexicon" value="CEL">
+            <label for="words">Common words</label>
+        </td>
+        <td width='15%' id='timer'>
+            <!--space reserved-->
+        </td>
+        <td width='10%'>
+            <label id='score'>Score: 0</label>
+        </td>
+    </tr>
+    </table>
+    <table class='controls'>
+    <tr>
+        <td width="30%">
+            <button id="start-button" onclick=startGame() disabled = true>Loading...</button>
+        </td>
+        <td style="text-align:center" width='50%'>
+            <input type="text" id="entry" placeholder="Enter a word" onfocus="this.value=''; this.placeholder=''">
+        </td>
+        <td width='10%'>
+            <p> </p>
+        </td>
+        <td width='20%'>
+            <label id='accuracy'></label>
+        </td>
+    </tr>    
+    </table>
  
     
   <svg class='backdrop' width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -321,9 +515,6 @@
     <!--line x1="30" y1="90" x2="45" y2="60" stroke="white" stroke-width="0.5"/-->
   </svg>
 
-</div>
-<div class='entry-container'>
-  <input type="text" id="entry" placeholder="Enter a word" onfocus="this.value=''; this.placeholder=''">
 </div>
   
   
