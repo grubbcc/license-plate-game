@@ -22,15 +22,6 @@
         display: flex;
         justify-content: center;        
     }
-    
-    .hidden {
-        
-    }
-    
-    #start-button {
-        font-size: 14px;
-        text-align: center;
-    }
   
     .container {
         -ms-overflow-style: none;
@@ -39,27 +30,112 @@
         height: 100%;
     }
     
-    .controls {
-        border-collapse: collapse;
-        width: 100%;
-        table-layout: fixed;
+    #controls {
         position: absolute;
-        vertical-align: top;
-        padding: 3px;
+        width: 100%;
+        height: 50vh;
+        display: grid;
+        font-size: 30px;
+        grid-template-columns: repeat(10, 1fr);
+        grid-template-rows: repeat(5, 1fr);
     }
 
-    #entry { opacity: 0; }
+    #name-of-game {
+        grid-column: 1/5;
+        grid-row: 1/2;
+    }
+    
+    #notification-area {
+        width: 130px;
+        grid-column: 4/7;
+        grid-row: 1/3;
+        font-family:"penitentiary-gothic-fill-regular";
+        text-align: center;
+    }
+    
+    #lexicon-chooser {
+        grid-column: 3/8;
+        grid-row: 2/4;
+        justify-self: center;
+        border-radius: 5px;
+        border: white solid 2px;
+        padding: 3px;
+        font-family: 'highway-gothic-narrow-regular';
+        font-size: 22px;
+        color: white;
+        background-color: rgb(0, 153, 0);
+    }
+    #copyright {
+        margin-top: 0px;
+        font-size: 14px;
+    }
+    
+    #start-button {
+        grid-column: 4/7;
+        grid-row: 5/6;
+        margin: 3px;
+        text-align: center;
+        font-size: 30px;
+    }
+    
+    #score {
+      font-family: 'highway-gothic-narrow-regular';
+      width: max(10%, 120px);
+      border-radius: 4px;
+      border: black solid 2px;
+      text-align: center;
+      margin-right: 50px;
+      justify-self: center;
+      align-self: center;
+      grid-column: 10/11;
+      grid-row: 1/3;
+      background-color: rgb(248, 186, 5)
+    }
+    
+    #accuracy {
+      font-family: 'highway-gothic-narrow-regular';
+      width: max(10%, 120px);
+      border-radius: 4px;
+      border: black solid 2px;
+      text-align: center;
+      margin-right: 50px;
+      justify-self: center;
+      align-self: center;
+      grid-column: 10/11;
+      grid-row: 4/6;
+      background-color: rgb(255, 102, 0);
+    }
+    #timer {
+        font-family: 'highway-gothic-narrow-regular';
+        width: 80px;
+        height: 60px;
+        grid-column: 1/2;
+        grid-row: 1/3;
+        margin-left: 50px;
+        justify-self: center;
+        align-self: center;
+        border-radius: 5px;
+        border: white solid 2px;
+        padding: 8px;
+        font-family: 'highway-gothic-narrow-regular';
+        font-size: 28px;
+        color: white;
+        background-color: rgb(0, 153, 0);
+    }    
+    
+    #entry {
+      border-radius: 3px;
+      justify-self: center;
+      align-self: center;
+      grid-column: 4/7;
+      grid-row: 5/6;
+      font-size: 24px;
+    }
 
     .backdrop {
       position: absolute;
       z-index: -1;
     }
-    
-    .sky { fill: skyblue; }
-    .road { fill: rgb(92,94,98); }
-    .left-margin { fill: rgb(248, 186, 5); }
-    .right-margin { fill: rgb(240, 241, 234); }
-    .shoulder { fill: green; }
 
     .dash {
         fill: rgb(240, 241, 234);
@@ -75,13 +151,12 @@
         animation-delay: 1.5s;
     }
      
-    
     .frame {
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
         position: absolute;
-        width: 120px;
-        height: 60px;
+        width: 240px;
+        height: 120px;
         animation-timing-function: cubic-bezier(1,.2,.95,.6);
         animation-iteration-count: 1;
         animation-fill-mode: forwards;
@@ -92,7 +167,6 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      z-index: -1;
     }
 
     .lettering {
@@ -102,8 +176,8 @@
         margin-top: 0;
         margin-bottom: 10px;
         text-align: center;
-        line-height: 50px;
-        font-size: 40px;
+        line-height: 100px;
+        font-size: 80px;
         font-family: "penitentiary-gothic-fill-regular";
         color: red;
     }
@@ -139,8 +213,8 @@
     .paused { animation-play-state: paused; }
 
     @keyframes approach-side {
-      from { transform: translate(54vw, 51vh) translate(-60px, -60px) scale(0.04); }
-      to { transform: translate(174vw, 81vh) translate(-60px, -60px) scale(1); }
+      from { transform: translate(54vw, 51vh) translate(-100px, -100px) scale(0.04); }
+      to { transform: translate(174vw, 81vh) translate(-100px, -100px) scale(1); }
     }
     
     @keyframes approach-center {
@@ -149,37 +223,37 @@
     }
 
     @keyframes approach-left {
-      from { transform: translate(49vw, 52vh) translate(-60px, -30px) scale(0.08); }
+      from { transform: translate(49vw, 52vh) translate(-120px, -60px) scale(0.08); }
       75% {opacity: 100;}
-      to { transform: translate(25vw, 100vh) translate(-60px, -30px) scale(1);
+      to { transform: translate(25vw, 100vh) translate(-120px, -60px) scale(1);
           opacity: 0; }
     }
     
 
     @keyframes approach-right {
-      from { transform: translate(51vw, 52vh) translate(-60px, -30px) scale(0.08); }
+      from { transform: translate(51vw, 52vh) translate(-120px, -60px) scale(0.08); }
       75% {opacity: 100;}
-      to { transform: translate(75vw, 100vh) translate(-60px, -30px) scale(1);
+      to { transform: translate(75vw, 100vh) translate(-120px, -60px) scale(1);
           opacity: 0; }
     }
     
 
     @keyframes fade-up {
-        from {
-            top: -50%;
-            opacity: 1;
-        }
-        to {
-            top: -200%;
-            opacity: 0;
-        }
+        from { top: -50%; opacity: 1; }
+        to { top: -200%; opacity: 0; }
     }
     
     @font-face{
         font-family:"penitentiary-gothic-fill-regular";
-        src:url("fonts/E-phemera - Penitentiary Gothic Fill.ttf");
+        src: url("fonts/E-phemera - Penitentiary Gothic Fill.ttf");
         format("truetype");
     }
+    
+    @font-face {
+       font-family: 'highway-gothic-narrow-regular';
+       src: url("fonts/TRAFFIC2.TTF");
+    }
+
     
 
       
@@ -190,34 +264,85 @@
     
     <script>
 
-
-        //Load dictionary
-
-        //Load top plays
         const topPlays = new Map();
-        fetch("/dict/CSW21-top-plays.json")
-            .then(response => response.json())
-            .then(data => Object.keys(data).forEach(key => topPlays.set(key, data[key])));
-
         const lexicon = new Trie();
-        fetch(new Request('/dict/CSW19.json'))
-            .then(response => response.json())
-            .then(data => data.forEach(item => lexicon.insert(item)))
-            .then(() => {
-                document.getElementById('start-button').innerHTML = 'Start game';
-                document.getElementById('start-button').disabled = false;
+
+        let button,
+            entry,
+            gameActive = false,
+            score = 0,
+            accuracy = [0, 0];
+        
+        window.onload = function() {
+ 
+            entry = document.getElementById('entry');            
+            button = document.getElementById('start-button');
+            button.style.zIndex = "2";
+            
+            entry.style.opacity = 0;
+            entry.disabled = true;
+            entry.style.zIndex = "-1";
+            
+        
+            document.getElementById('lexicon-chooser').style.zIndex = 1;
+
+
+            document.getElementById('CSW21').onclick = function () {
+                document.getElementById('copyright').innerHTML = 'Collins Official Scrabble Words,<br>an imprint of HarperCollins Publishers Limited.';
+            }
+            document.getElementById('NWL20').onclick = function () {
+                document.getElementById('copyright').innerHTML = 'NASPA Word List, 2020 Edition,<br>© 2020 North American Word Game Players Association.';
+            }
+            document.getElementById('CEL').onclick = function () {
+                document.getElementById('copyright').innerHTML = 'Common English Lexicon, a subset of CSW21,<br> by Eric Smith and Kenji Matsumoto.';
+            }
+            
+            const element = document.querySelector('input[name="lexicon"]:checked');
+            element.onclick.apply(element);
+            
+            entry.addEventListener("keyup", function(event) {
+                if (event.keyCode === 13) {
+                    submit(entry.value.toUpperCase());
+                    entry.value = "";
+                }
             });
+
+        };
+        
     
-        let gameActive = false;
-        let score = 0;
-        let accuracy = [0, 0];
+
+
+        /**
+         * 
+         */
+
+        async function loadLexicon(wordlist) {
+            
+            button.innerHTML = "Loading...";
+            button.disabled = true;
+            
+            await fetch("/dict/" + wordlist + "-top-plays.json")
+                .then(response => response.json())
+                .then(data => Object.keys(data).forEach(key => topPlays.set(key, data[key])));
+    
+            await fetch(new Request('/dict/' + wordlist +'.json'))
+                .then(response => response.json())
+                .then(data => data.forEach(item => lexicon.insert(item)))
+                .then(() => {
+                    button.innerHTML = 'Start game';
+                    button.disabled = false;
+            });
+        }
+            
+
+        
 
         /**
          * 
          */
   
         function loopLeft() {
-            leftLoop = setTimeout(function() {
+            setTimeout(function() {
                 if(!gameActive) return;
                 nextPlate('animate-left');
                 loopLeft();  
@@ -239,33 +364,50 @@
                 loopSigns();
             }, Math.round(70000*Math.random()) + 70000);
         };
+        
+        
 
         /**
          *
          */
         
         function startGame() {
+
+            const wordlist = document.querySelector('input[name="lexicon"]:checked').value;
+
+                entry.disabled = false;
+                entry.style.opacity = 1;
+                entry.style.zIndex = "2";
+
+                button.style.opacity = 0;
+                button.disabled = true;
+                button.style.zIndex = "-1";
+
+                Array.from(document.getElementsByClassName('start-item')).forEach(element => element.style.opacity = 0);
+                Array.from(document.getElementsByClassName('start-item')).forEach(element => element.disabled = true);
+                Array.from(document.getElementsByClassName('game-item')).forEach(element => element.style.opacity = 1);
+
+                gameActive = true;
             
-            gameActive = true;
-            
-            document.getElementById('start-button').disabled = true;
-            document.getElementById('start-button').style.opacity = 0;
-            const entry = document.getElementById("entry");
-            entry.style.opacity = 1;
-            entry.addEventListener("keyup", function(event) {
-                if (event.keyCode === 13) {
-                    submit(entry.value.toUpperCase());
-                    entry.value="";
-                }
-            });
-            
-            nextPlate('animate-left');
-            setTimeout(() => loopLeft(), Math.round(7000*Math.random()));
-            setTimeout(() => loopRight(), Math.round(7000*Math.random()) + 7000);
-            loopSigns();
-            
-            setTimer();
+                loadLexicon(wordlist).then(() => {
+                    
+                    nextPlate('animate-left');
+                    setTimeout(() => loopLeft(), Math.round(7000*Math.random()));
+                    setTimeout(() => loopRight(), Math.round(7000*Math.random()) + 7000);
+                //    loopSigns();
+                    
+                    setTimer();
+                });
         }
+        
+        /**
+         * 
+         */
+         
+         function pause() {
+             
+             /* to implement later */
+         }
         
 
         
@@ -274,13 +416,10 @@
          */ 
         
         function setTimer() {
-            
             let minsLeft = 5;
             let secsLeft = 0;
-            const startTime = Date.now();
             
             const timer = setInterval(function() {
-                let millisElapsed = Date.now() - startTime;
                 document.getElementById('timer').innerHTML = minsLeft + ":" + secsLeft.toString().padStart(2,0);
                 if(--secsLeft < 0) {
                     if(--minsLeft < 0) {
@@ -291,8 +430,13 @@
                         secsLeft += 60;
                     }
                 }
+                else {
+                    if(secsLeft <= 15 && minsLeft === 0) {
+                        document.getElementById('timer').style.backgroundColor = secsLeft % 2 === 0 ? 'rgb(248, 186, 5)' : 'rgb(255, 102, 0)';
+                    }
+                }
 
-            }, 500);
+            }, 1000);
         }
         
         /**
@@ -301,11 +445,23 @@
          
         function endGame() {
             gameActive = false;
-            document.getElementById('timer').innerHTML = "GAME OVER";
+            
+            document.getElementById('notification-area').innerHTML = "GAME OVER";
             document.querySelectorAll('.frame').forEach(frame => explode(frame));
-            document.getElementById('start-button').innerHTML = 'Play again';
-            document.getElementById('start-button').style.opacity = 1;
-            document.getElementById('start-button').disabled = false;
+            document.getElementById('timer').style.backgroundColor = 'rgb(0, 153, 0)'
+
+            button.style.opacity = 1;
+            button.disabled = false;
+            button.style.zIndex = "2";
+
+            Array.from(document.getElementsByClassName('start-item')).forEach(element => element.style.opacity = 1);
+            Array.from(document.getElementsByClassName('start-item')).forEach(element => element.disabled = false);
+            entry.style.opacity = 0;
+            entry.disabled = true;
+            entry.style.zIndex = "-1";
+
+            button.innerHTML = 'Play again';
+
         }
         
         /**
@@ -325,7 +481,7 @@
          */
         
         function nextPlate(selector) {
-            
+
             let nextDigits = Math.floor(Math.random() * 1000).toString().padStart(3,0);
             let nextChars = "";
              while(!topPlays.has(nextChars)) {
@@ -338,25 +494,27 @@
             const nextLettering = document.createElement("p");
             nextLettering.className = 'lettering';            
             nextLettering.innerHTML = nextChars + " " + nextDigits;
-            
-            const nextPlate = document.createElement("img");
-            nextPlate.className ='plate';
-            nextPlate.setAttribute('src', "/plates/IL.jpg");
 
             const nextFrame = document.createElement("div");
             nextFrame.classList.add('frame', selector);
-            nextFrame.appendChild(nextPlate);
-            nextFrame.appendChild(nextLettering);
             nextFrame.setAttribute('letters', nextChars);
             nextFrame.setAttribute('prevScore', 0);
             nextFrame.setAttribute('bestPlay', topPlays.get(nextChars));
-   //       console.log(nextFrame.getAttribute('bestPlay'));
-            document.querySelector('.container').appendChild(nextFrame);
+            console.log(nextFrame.getAttribute('bestPlay'));
+
+            const nextPlate = document.createElement('img');
+            nextPlate.className ='plate';
+            nextPlate.src = '/plates/IL.jpg';
+            nextPlate.onload = function () {
+                nextFrame.appendChild(nextPlate);
+                nextFrame.appendChild(nextLettering);            
+                document.querySelector('.container').appendChild(nextFrame);
+            }
      
             setTimeout(function() { 
-                nextFrame.remove() 
+                nextFrame.remove()
                 accuracy[1] += 3;
-                document.getElementById('accuracy').innerHTML = 'Accuracy: ' + Math.round(100*accuracy[0]/accuracy[1]) + '%';
+                document.getElementById('accuracy').innerHTML = 'Accuracy<br>' + Math.round(100*accuracy[0]/accuracy[1]) + '%';
             }, 17000);
         }
         
@@ -374,7 +532,7 @@
                 
                 score += points;
                 accuracy[0] += points;
-                document.getElementById('score').innerHTML = 'Score: ' + score;
+                document.getElementById('score').innerHTML = 'Score<br>' + score;
                 
                 setTimeout(function() {
                     scoreAlert.remove();
@@ -403,7 +561,7 @@
                     round: false,
                     maxAngle: 360,
                     gravity: 5,
-                    groundDistance: 10,
+                    groundDistance: 7,
                 });
             }, 300);
         }
@@ -460,58 +618,39 @@
 
     </script>
     
-</head>    
+</head>
 
 <div class='container'>
-    <table class='controls'>
+   <div id='controls'>
+       <!--label class ='start-item' id="name-of-game" style>License plate game</label-->
+       <div class='start-item' id='lexicon-chooser'>
+          Word list:<br>
+          <input type="radio" id="CSW21" name="lexicon" value="CSW21" checked="checked">
+          <label for="words">CSW21</label>
+          <input type="radio" id="NWL20" name="lexicon" value="NWL20">
+          <label for="words">NWL20</label>
+          <input type="radio" id="CEL" name="lexicon" value="CEL">
+          <label for="words">Common words</label>
+          <p id='copyright'></p>
+       </div>
+     
+       <button id="start-button" onclick='startGame()'>Start game</button>
+       <label class='game-item' id='notification-area'></label>
+       <input class='game-item' type="text" id="entry" placeholder="Enter a word" onfocus="this.value=''; this.placeholder=''">
+       <label class='game-item' id='timer' style="opacity:0"> 5:00</label>
+       <label class='game-item' id='score' style="opacity:0">Score<br>0</label>        
+       <label class='game-item' id='accuracy' style="opacity:0">Accuracy<br>--</label>
+    </div>
 
-   <tr>
-        <td width='25%'>
-            <h4 style>License plate game</h4>
-        </td>
-
-        <td width="50%">
-            <input type="radio" id="words" name="lexicon" value="CSW" checked="checked">
-            <label for="words">CSW21</label>
-            <input type="radio" id="words" name="lexicon" value="NWL">
-            <label for="words">NWL2020</label>
-            <input type="radio" id="words" name="lexicon" value="CEL">
-            <label for="words">Common words</label>
-        </td>
-        <td width='15%' id='timer'>
-            <!--space reserved-->
-        </td>
-        <td width='10%'>
-            <label id='score'>Score: 0</label>
-        </td>
-    </tr>
-    </table>
-    <table class='controls'>
-    <tr>
-        <td width="30%">
-            <button id="start-button" onclick=startGame() disabled = true>Loading...</button>
-        </td>
-        <td style="text-align:center" width='50%'>
-            <input type="text" id="entry" placeholder="Enter a word" onfocus="this.value=''; this.placeholder=''">
-        </td>
-        <td width='10%'>
-            <p> </p>
-        </td>
-        <td width='20%'>
-            <label id='accuracy'></label>
-        </td>
-    </tr>    
-    </table>
- 
     
   <svg class='backdrop' width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-    <polygon class='road' points="0,50 100,50 100,100 0,100"/>
-    <polygon class='sky' points="0,0 100,00 100,50 0,50"/>
-    <polygon class='left-margin' points="0,100 3,100 50,50"/>
-    <polygon class='right-margin' points="100,100 97,100 50,50"/>
-    <polygon class='shoulder' points="0,100 0,50 50,50 100,100 100,50 50,50"/>
-    <polygon class='dash' points="49.5,75 50.5,75 51,100 49, 100"/>
-    <polygon class='dash delayed' points="49.5,75 50.5,75 51,100 49, 100"/>
+    <polygon class='road' points="0,50 100,50 100,100 0,100" fill='rgb(92,94,98)'/>
+    <polygon class='sky' points="0,0 100,00 100,50 0,50" fill='skyblue'/>
+    <polygon class='left-margin' points="0,100 3,100 50,50" fill='rgb(248, 186, 5)'/>
+    <polygon class='right-margin' points="100,100 97,100 50,50" fill='rgb(240, 241, 234)'/>
+    <polygon class='shoulder' points="0,100 0,50 50,50 100,100 100,50 50,50" fill='green'/>
+    <polygon class='dash' points="49.5,75 50.5,75 51,100 49, 100" fill='rgb(240, 241, 234)'/>
+    <polygon class='dash delayed' points="49.5,75 50.5,75 51,100 49, 100" fill='rgb(240, 241, 234)'/>
     <!--line x1="30" y1="90" x2="45" y2="60" stroke="white" stroke-width="0.5"/-->
   </svg>
 
