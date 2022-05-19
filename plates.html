@@ -1,101 +1,101 @@
 <!doctype HTML>
 <html>
-    
+	
 <head>
   <meta charset="utf-8">
   <meta property="og:image" content="https://www.seattlephysicstutor.com/images/license to spell.png" />
   <title>License to Spell</title>
   
-<!-- ///////////////////////////////// -->
-<!-- //////////    CSS     /////////// -->
-<!-- ///////////////////////////////// -->
+<!-- /////////////////////////////////// -->
+<!-- //////////     CSS      /////////// -->
+<!-- /////////////////////////////////// -->
   
   <style>
   
-    body {
-        margin:0;
-        padding:0
-    }
-    
-    * { white-space: nowrap; }
+	body {
+		margin:0;
+		padding:0
+	}
+	
+	* { white-space: nowrap; }
   
-    :not(.frame) { overflow: hidden; }
+	:not(.frame) { overflow: hidden; }
 
-    div.explode-wrapper {
-        display: flex;
-        justify-content: center;        
-    }
+	div.explode-wrapper {
+		display: flex;
+		justify-content: center;		
+	}
   
-    #container {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-        width: 100%;
-        height: 100%;
-    }
-    
-    #name-of-game {
-        font-family: 'edge-racer';
-        margin: auto;
-        grid-column: 1/3;
-        grid-row: 1/2;
-    }
-    
-    #controls {
-        position: absolute;
-        width: 100%;
-        height: 50vh;
-        display: grid;
-        font-size: 42px;
-        grid-template-columns: repeat(10, 1fr);
-        grid-template-rows: repeat(5, 1fr);
-    }
-    
-    #notification-area {
-        grid-column: 5/7;
-        grid-row: 1/3;
-        font-family: "penitentiary gothic";
-        text-align: center;
-    }
-    
-    #lexicon-chooser {
-        grid-column: 3/9;
-        grid-row: 2/4;
-        height: 140px;
-        justify-self: center;
-        border-radius: 5px;
-        border: white solid 2px;
-        padding: 4px;
-        font-family: 'highway gothic';
-        font-size: 32px;
-        color: white;
-        background-color: rgb(0, 153, 0);
-    }
-    
-    #copyright {
-        margin-top: 0px;
-        font-size: 20px;
-    }
-    
-    #how-to {
-        margin-left: 15px;
-        grid-column: 1/4;
-        grid-row: 3/6;
-        font-size: 14px;
-    }
-    
-    #start-button {
-        grid-column: 5/7;
-        grid-row: 5/6;
-        margin-bottom: 25px;
-        justify-self: center;
-        align-self: center;
-        text-align: center;
-        padding: 12px 60px 12px 60px;
-        font-size: 36px;
-        z-index: 1;
-    }
-    
-    #score {
+	#container {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+		width: 100%;
+		height: 100%;
+	}
+	
+	#name-of-game {
+		font-family: 'edge-racer';
+		margin: auto;
+		grid-column: 1/3;
+		grid-row: 1/2;
+	}
+	
+	#controls {
+		position: absolute;
+		width: 100%;
+		height: 50vh;
+		display: grid;
+		font-size: 42px;
+		grid-template-columns: repeat(10, 1fr);
+		grid-template-rows: repeat(5, 1fr);
+	}
+	
+	#notification-area {
+		grid-column: 5/7;
+		grid-row: 1/3;
+		font-family: "penitentiary gothic";
+		text-align: center;
+	}
+	
+	#lexicon-chooser {
+		grid-column: 3/9;
+		grid-row: 2/4;
+		height: 140px;
+		justify-self: center;
+		border-radius: 5px;
+		border: white solid 2px;
+		padding: 4px;
+		font-family: 'highway gothic';
+		font-size: 32px;
+		color: white;
+		background-color: rgb(0, 153, 0);
+	}
+	
+	#copyright {
+		margin-top: 0px;
+		font-size: 20px;
+	}
+	
+	#how-to {
+		margin-left: 15px;
+		grid-column: 1/4;
+		grid-row: 3/6;
+		font-size: 14px;
+	}
+	
+	#start-button {
+		grid-column: 5/7;
+		grid-row: 5/6;
+		margin-bottom: 25px;
+		justify-self: center;
+		align-self: center;
+		text-align: center;
+		padding: 12px 60px 12px 60px;
+		font-size: 36px;
+		z-index: 1;
+	}
+	
+	#score {
 		font-family: 'highway gothic';
 		width: max(16%, 160px);
 		border-radius: 4px;
@@ -107,9 +107,9 @@
 		grid-column: 10/11;
 		grid-row: 1/3;
 		background-color: rgb(248, 186, 5)
-    }
-    
-    #accuracy {
+	}
+	
+	#accuracy {
 		font-family: 'highway gothic';
 		width: max(16%, 160px);
 		border-radius: 4px;
@@ -121,92 +121,92 @@
 		grid-column: 10/11;
 		grid-row: 4/6;
 		background-color: rgb(255, 102, 0);
-    }
-    
-    #timer {
-        font-family: 'highway gothic';
-        width: 90px;
-        height: 60px;
-        grid-column: 1/2;
-        grid-row: 1/3;
-        margin-left: 20px;
-        justify-self: center;
-        align-self: center;
-        text-align: center;
-        border-radius: 5px;
-        border: white solid 2px;
-        font-family: 'highway gothic';
-        font-size: 34px;
-        color: white;
-        background-color: rgb(0, 153, 0);
-    }
-    
-    #timer > * { margin: auto; }
-    
-    #entry {
+	}
+	
+	#timer {
+		font-family: 'highway gothic';
+		width: 90px;
+		height: 60px;
+		grid-column: 1/2;
+		grid-row: 1/3;
+		margin-left: 20px;
+		justify-self: center;
+		align-self: center;
+		text-align: center;
+		border-radius: 5px;
+		border: white solid 2px;
+		font-family: 'highway gothic';
+		font-size: 34px;
+		color: white;
+		background-color: rgb(0, 153, 0);
+	}
+	
+	#timer > * { margin: auto; }
+	
+	#entry {
 		border-radius: 5px;
 		justify-self: center;
 		align-self: center;
 		grid-column: 5/7;
 		grid-row: 5/6;
 		font-size: 36px;
-    }
+	}
 
-    .backdrop {
-      position: absolute;
-      z-index: 0;
-    }
+	.backdrop {
+	  position: absolute;
+	  z-index: 0;
+	}
 
-    .dash {
-        fill: rgb(240, 241, 234);
-        transform-origin: center center;
-        animation-name: approach-center;
-        animation-timing-function: cubic-bezier(1,.2,.95,.6);
-        animation-duration: 3s;
-        animation-fill-mode: forwards;
-        animation-iteration-count: infinite;
-    }
+	.dash {
+		fill: rgb(240, 241, 234);
+		transform-origin: center center;
+		animation-name: approach-center;
+		animation-timing-function: cubic-bezier(1,.2,.95,.6);
+		animation-duration: 3s;
+		animation-fill-mode: forwards;
+		animation-iteration-count: infinite;
+	}
 	
-    .delayed {
-        transform: translateY(320px); /* offscreen */
-        animation-delay: 1.5s;
-    }
-    
-    #container > .frame {
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-        position: absolute;
-        width: 300px;
-        height: 150px;
-        transform-origin: bottom center;
-        animation-timing-function: cubic-bezier(.1,.1,.97,.24);
-        animation-iteration-count: 1;
-        animation-fill-mode: forwards;
-        animation-duration: 15s;
-        font-size: 96px;
-    }
-    
-    #container > .frame > .plate {
-        position: absolute;
-        width: 100%;
-        height: auto;
-        border-radius: 2px;
-    }
+	.delayed {
+		transform: translateY(320px); /* offscreen */
+		animation-delay: 1.5s;
+	}
+	
+	#container > .frame {
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		position: absolute;
+		width: 300px;
+		height: 150px;
+		transform-origin: bottom center;
+		animation-timing-function: cubic-bezier(.1,.1,.97,.24);
+		animation-iteration-count: 1;
+		animation-fill-mode: forwards;
+		animation-duration: 15s;
+		font-size: 96px;
+	}
+	
+	#container > .frame > .plate {
+		position: absolute;
+		width: 100%;
+		height: auto;
+		border-radius: 2px;
+	}
 
-    .lettering {
-        position: absolute;
-        text-align: center;
-    }
+	.lettering {
+		position: absolute;
+		text-align: center;
+	}
 
-    .hidden {
-        opacity: 0;
-        z-index: -1;
-    }
+	.hidden {
+		opacity: 0;
+		z-index: -1;
+	}
 
-    #recap {
-        font-size: 32px;
-        background: rgba(0,0,0,0.1);
-        color: white;
+	#recap {
+		font-size: 32px;
+		background: rgba(0,0,0,0.1);
+		color: white;
 		width: 470px;
 		height: 44vh;
 		position: absolute;
@@ -219,231 +219,231 @@
 		grid-gap: 1rem;
 		overflow-y: hidden;
 		top: 52vh;
-        left: 0; 
-        right: 0; 
-        margin-left: auto; 
-        margin-right: auto; 
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
-    
-    #recap::-webkit-scrollbar {
-        display: none;
-    }
-    
-    #recap .frame {
+		left: 0; 
+		right: 0; 
+		margin-left: auto; 
+		margin-right: auto; 
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+	
+	#recap::-webkit-scrollbar {
+		display: none;
+	}
+	
+	#recap .frame {
 		position: relative;
-    }
-    
-    #recap .plate {
-        border-radius: 2px;
-        width: 100px;
-        height: auto;
-    }
-    
-    #slider {
-        position: absolute;
-        top: 52vh;
-        left: calc(50vw + 213px);
-        -webkit-appearance: none;
-        width: 15px;
-        height: 44vh;
-        background: rgba(0,0,0,0.2);
-        outline: none;
-        border: 6px solid black;
-        border-radius: 8px;
-        z-index: 1;
-    }
-    
-    #slider::-moz-range-thumb {
-        width: 60px;
-        height: 16px;
-        background: purple;
-        cursor: pointer;
-        border: 4px solid darkblue;
-        border-radius: 8px;
-    }
-    
-    #slider::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 60px;
-        height: 16px;
-        background: purple;
-        cursor: pointer;
-        border: 4px solid darkblue;
-        border-radius: 8px;
-    }
+	}
+	
+	#recap .plate {
+		border-radius: 2px;
+		width: 100px;
+		height: auto;
+	}
+	
+	#slider {
+		position: absolute;
+		top: 52vh;
+		left: calc(50vw + 213px);
+		-webkit-appearance: none;
+		width: 15px;
+		height: 44vh;
+		background: rgba(0,0,0,0.2);
+		outline: none;
+		border: 6px solid black;
+		border-radius: 8px;
+		z-index: 1;
+	}
+	
+	#slider::-moz-range-thumb {
+		width: 60px;
+		height: 16px;
+		background: purple;
+		cursor: pointer;
+		border: 4px solid darkblue;
+		border-radius: 8px;
+	}
+	
+	#slider::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		appearance: none;
+		width: 60px;
+		height: 16px;
+		background: purple;
+		cursor: pointer;
+		border: 4px solid darkblue;
+		border-radius: 8px;
+	}
 
-    .scoreAlert {
-        color: orange;
-        font-family: sans-serif;
-        font-size: 60px;
-        position: absolute;
-        transform: translate(100%, -50%);
-        animation-name: fade-up;
-        animation-duration: 3s;
-        animation-iteration-count: 1;
-        animation-timing-function: ease-out;
-    }
-    
-    .roadside {
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-        position: absolute;
-        width: 120px;
-        height: 120px;
-        transform: translate(-50%, -50%);
-        animation-name: approach-side;
-        animation-timing-function: cubic-bezier(1,.2,.95,.6);
-        animation-iteration-count: 1;
-        animation-fill-mode: forwards;
-        animation-duration: 60s;        
-    }
-    
-    .animate-left { animation-name: approach-left; }
-    .animate-right { animation-name: approach-right; }
-    .paused { animation-play-state: paused; }
+	.scoreAlert {
+		color: orange;
+		font-family: sans-serif;
+		font-size: 60px;
+		position: absolute;
+		transform: translate(100%, -50%);
+		animation-name: fade-up;
+		animation-duration: 3s;
+		animation-iteration-count: 1;
+		animation-timing-function: ease-out;
+	}
+	
+	.roadside {
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		position: absolute;
+		width: 120px;
+		height: 120px;
+		transform: translate(-50%, -50%);
+		animation-name: approach-side;
+		animation-timing-function: cubic-bezier(1,.2,.95,.6);
+		animation-iteration-count: 1;
+		animation-fill-mode: forwards;
+		animation-duration: 60s;		
+	}
+	
+	.animate-left { animation-name: approach-left; }
+	.animate-right { animation-name: approach-right; }
+	.paused { animation-play-state: paused; }
 
-    @keyframes approach-side {
-      from { transform: translate(54vw, 51vh) translate(-150px, -75px) scale(0.04); }
-      to { transform: translate(174vw, 81vh) translate(-150px, -75px) scale(1); }
-    }
-    
-    @keyframes approach-center {
+	@keyframes approach-side {
+	  from { transform: translate(54vw, 51vh) translate(-150px, -75px) scale(0.04); }
+	  to { transform: translate(174vw, 81vh) translate(-150px, -75px) scale(1); }
+	}
+	
+	@keyframes approach-center {
 		from { transform: scale(0.04); }
 		to { transform: translateY(23px) scale(1); }
-    }
+	}
 
-@keyframes approach-left {
+    @keyframes approach-left {
 		from { transform: translate(-150px, -150px) translate(49.5vw, 51vh) scale(0.03); }
-  75% {opacity: 1;}
+        75% {opacity: 1;}
 		to { transform:  translate(-100px, -200px) translate(20vw, 110vh) scale(1.3); opacity: 0; }
-}
+    }
 
-@keyframes approach-right {
+    @keyframes approach-right {
 		from { transform: translate(-150px, -150px) translate(50.5vw, 51vh) scale(0.03); }
-  75% {opacity: 1;}
+        75% {opacity: 1;}
 		to { transform:  translate(-200px, -200px) translate(80vw, 110vh) scale(1.3); opacity: 0;  }
-}
-    
-    @keyframes fade-up {
-        from { top: -50%; opacity: 1; }
-        to { top: -200%; opacity: 0; }
     }
-    
-    @font-face{
-        font-family: "penitentiary gothic";
-        src: url("fonts/E-phemera - Penitentiary Gothic Fill.ttf");
-    }
-    
-    @font-face {
-       font-family: 'highway gothic';
-       src: url("fonts/TRAFFIC2.TTF");
-    }
+	
+	@keyframes fade-up {
+		from { top: -50%; opacity: 1; }
+		to { top: -200%; opacity: 0; }
+	}
+	
+	@font-face{
+		font-family: "penitentiary gothic";
+		src: url("fonts/E-phemera - Penitentiary Gothic Fill.ttf");
+	}
+	
+	@font-face {
+	   font-family: 'highway gothic';
+	   src: url("fonts/TRAFFIC2.TTF");
+	}
 
-    @font-face {
-       font-family: 'LicensePlate';
-       src: url("fonts/LicensePlate.ttf");
-    }
-    
-    @font-face {
-       font-family: 'edge-racer';
-       src: url("fonts/edgeracerital.ttf");
-    }
+	@font-face {
+	   font-family: 'LicensePlate';
+	   src: url("fonts/LicensePlate.ttf");
+	}
+	
+	@font-face {
+	   font-family: 'edge-racer';
+	   src: url("fonts/edgeracerital.ttf");
+	}
 </style>
-    
-<!-- ///////////////////////////////// -->
-<!-- //////////     JS      ////////// -->
-<!-- ///////////////////////////////// -->
+	
+<!-- ////////////////////////////////// -->
+<!-- //////////      JS      ////////// -->
+<!-- ////////////////////////////////// -->
 
 <script type="text/javascript" src="/lib/trie.js"></script>
 <script type="text/javascript" src="/lib/imgexplode.js"></script>
 
 <script>
 
-    const topPlays = new Map();
-    const lexicon = new Trie();
-    let button,
-        entry,
-        recap,
-        slider,
-        plateData,
-        plates = [],
-        gameActive = false,
-        score = 0,
-        accuracy = [0, 0];
-        
-    fetch("plates.json")
-        .then(response => response.json())
-        .then(data => plateData = data);
-        
-        
-    function show(item) {
-        item.style.opacity = 1;
-        item.style.zIndex = 1;
-        item.disabled = false;
-    }    
-    function hide(item) {
-        item.style.opacity = 0;
-        item.style.zIndex = -1;
-        item.disabled = true;
-    }
+	const topPlays = new Map();
+	const lexicon = new Trie();
+	let button,
+		entry,
+		recap,
+		slider,
+		plateData,
+		plates = [],
+		gameActive = false,
+		score = 0,
+		accuracy = [0, 0];
+		
+	fetch("plates.json")
+		.then(response => response.json())
+		.then(data => plateData = data);
+		
+		
+	function show(item) {
+		item.style.opacity = 1;
+		item.style.zIndex = 1;
+		item.disabled = false;
+	}	
+	function hide(item) {
+		item.style.opacity = 0;
+		item.style.zIndex = -1;
+		item.disabled = true;
+	}
 
-    /**
-     * 
-     */
-    window.onload = function() {
+	/**
+	 * 
+	 */
+	window.onload = function() {
 
-        document.querySelectorAll('.start-item').forEach(item => show(item));
-        document.querySelectorAll('.game-item').forEach(item => hide(item));  
+		document.querySelectorAll('.start-item').forEach(item => show(item));
+		document.querySelectorAll('.game-item').forEach(item => hide(item));  
 
-        entry = document.getElementById('entry');            
-        button = document.getElementById('start-button');
-        recap = document.getElementById('recap');
-        slider = document.getElementById('slider');
+		entry = document.getElementById('entry');			
+		button = document.getElementById('start-button');
+		recap = document.getElementById('recap');
+		slider = document.getElementById('slider');
 
-        recap.onwheel = event => {
-            event.preventDefault();
-            recap.scrollTop += event.deltaY;
-            slider.value = 100*(1 - recap.scrollTop/(recap.scrollHeight - recap.clientHeight + 7));
-        }
+		recap.onwheel = event => {
+			event.preventDefault();
+			recap.scrollTop += event.deltaY;
+			slider.value = 100*(1 - recap.scrollTop/(recap.scrollHeight - recap.clientHeight + 7));
+		}
 
-        document.getElementById('CSW21').onclick = function () {
-            document.getElementById('copyright').innerHTML = 'Collins Official Scrabble Words,<br>an imprint of HarperCollins Publishers Limited.';
-        }
-        document.getElementById('NWL20').onclick = function () {
-            document.getElementById('copyright').innerHTML = 'NASPA Word List, 2020 Edition,<br>© 2020 North American Word Game Players Association.';
-        }
-        document.getElementById('CEL').onclick = function () {
-            document.getElementById('copyright').innerHTML = 'Common English Lexicon, a subset of CSW21,<br> by Eric Smith and Kenji Matsumoto.';
-        }
-        
-        document.querySelector('input[name="lexicon"]:checked').onclick.apply(this);
-        
-        entry.addEventListener("keyup", function(event) {
-            if (event.keyCode === 13) {
-                submit(entry.value.toUpperCase());
-                entry.value = "";
-            }
-        });
-    }
-    
+		document.getElementById('CSW21').onclick = function () {
+			document.getElementById('copyright').innerHTML = 'Collins Official Scrabble Words,<br>an imprint of HarperCollins Publishers Limited.';
+		}
+		document.getElementById('NWL20').onclick = function () {
+			document.getElementById('copyright').innerHTML = 'NASPA Word List, 2020 Edition,<br>© 2020 North American Word Game Players Association.';
+		}
+		document.getElementById('CEL').onclick = function () {
+			document.getElementById('copyright').innerHTML = 'Common English Lexicon, a subset of CSW21,<br> by Eric Smith and Kenji Matsumoto.';
+		}
+		
+		document.querySelector('input[name="lexicon"]:checked').onclick.apply(this);
+		
+		entry.addEventListener("keyup", function(event) {
+			if (event.keyCode === 13) {
+				submit(entry.value.toUpperCase());
+				entry.value = "";
+			}
+		});
+	}
+	
 
-    /**
-     * 
-     */
-    async function loadLexicon(wordlist) {
-        
-        await fetch("/dict/" + wordlist + "-top-plays.json")
-            .then(response => response.json())
-            .then(data => Object.keys(data).forEach(key => topPlays.set(key, data[key])));
+	/**
+	 * 
+	 */
+	async function loadLexicon(wordlist) {
+		
+		await fetch("/dict/" + wordlist + "-top-plays.json")
+			.then(response => response.json())
+			.then(data => Object.keys(data).forEach(key => topPlays.set(key, data[key])));
 
-        await fetch(new Request('/dict/' + wordlist +'.json'))
-            .then(response => response.json())
-            .then(data => data.forEach(item => lexicon.insert(item)));
-    }
-        
+		await fetch(new Request('/dict/' + wordlist +'.json'))
+			.then(response => response.json())
+			.then(data => data.forEach(item => lexicon.insert(item)));
+	}
+		
 
 	/**
 	 *
@@ -455,127 +455,127 @@
 		document.querySelector('#container').append(frame);
 		plates.push(nextPlate);
 		setTimeout(function() {
-    		frame.remove();
-    		nextPlate.connected = false;
-    		accuracy[1] += 3;
-    		document.getElementById('accuracy').innerHTML = 'Accuracy<br>' + Math.round(100*accuracy[0]/accuracy[1]) + '%';
-    	}, 17000);
+			frame.remove();
+			nextPlate.connected = false;
+			accuracy[1] += 3;
+			document.getElementById('accuracy').innerHTML = 'Accuracy<br>' + Math.round(100*accuracy[0]/accuracy[1]) + '%';
+		}, 17000);
 	}
 
-    /**
-     * 
-     */
-    function loopLeft() {
-        setTimeout(function() {
-            if(!gameActive) return;
+	/**
+	 * 
+	 */
+	function loopLeft() {
+		setTimeout(function() {
+			if(!gameActive) return;
 			nextPlate('animate-left');
-            loopLeft();  
-        }, Math.round(7000*Math.random()) + 7000);
-    };
-    
-    function loopRight() {
-        setTimeout(function() {
-            if(!gameActive) return;
-			nextPlate('animate-right');
-            loopRight();  
-        }, Math.round(7000*Math.random()) + 7000);
-    
-    };
-    
-    function loopSigns() {
-        signsLoop = setTimeout(function() {
-            nextSign();
-            loopSigns();
-        }, Math.round(70000*Math.random()) + 70000);
-    };
-    
-    
-
-    /**
-     *
-     */
-    function startGame() {
-        
-        plates = [];
-        recap.innerHTML = '';
-
-        const wordlist = document.querySelector('input[name="lexicon"]:checked').value;
-
-        document.querySelectorAll('.game-item').forEach(item => show(item));
-        document.querySelectorAll('.start-item').forEach(item => hide(item));
-        
-        show(document.getElementById('score'));
-        show(document.getElementById('accuracy'));
-        hide(slider);
-        hide(recap);
-
-        gameActive = true;
-        score = 0,
-        accuracy = [0, 0];
-        document.getElementById('score').innerHTML = 'Score<br>' + score;
-        document.getElementById('accuracy').innerHTML = 'Accuracy<br>--';
-        
-        button.innerHTML = "Loading...";
-        button.disabled = true;
-        loadLexicon(wordlist).then(() => {
-            hide(button);
-            show(entry);
-            
-			nextPlate('animate-left');
-            setTimeout(() => loopLeft(), Math.round(7000*Math.random()) + 7000);
-            setTimeout(() => loopRight(), Math.round(7000*Math.random()));
-        //    loopSigns();
-            
-            setTimer();
-        });
-    }
-    
-    
-    
-    /**
-     * 
-     */
-    function pause() {
-        
-        /* to implement later */
-    }
-    
-
-    
-    /**
-     * 
-     */ 
-    function setTimer() {
+			loopLeft();  
+		}, Math.round(7000*Math.random()) + 7000);
+	};
 	
-	    let minsLeft = 5;
-        let secsLeft = 0;
-        
-        const timer = setInterval(function() {
-            document.getElementById('timer').innerHTML = minsLeft + ":" + secsLeft.toString().padStart(2, 0);
-            if(--secsLeft < 0) {
-                if(--minsLeft < 0) {
-                    clearInterval(timer);
-                    endGame();
-                }
-                else {
-                    secsLeft += 60;
-                }
-            }
-            else if(minsLeft === 0) {
-                if(secsLeft <= 15) {
-                    document.getElementById('timer').style.backgroundColor = secsLeft % 2 === 0 ? 'rgb(248, 186, 5)' : 'rgb(255, 102, 0)';
-                }
-                if(secsLeft <= 5) {
-                    gameActive = false;
-                }
-            }
-        }, 1000);
-    }
-    
+	function loopRight() {
+		setTimeout(function() {
+			if(!gameActive) return;
+			nextPlate('animate-right');
+			loopRight();  
+		}, Math.round(7000*Math.random()) + 7000);
+	
+	};
+	
+	function loopSigns() {
+		signsLoop = setTimeout(function() {
+			nextSign();
+			loopSigns();
+		}, Math.round(70000*Math.random()) + 70000);
+	};
+	
+	
 
-    /**
-     * 
-     */
+	/**
+	 *
+	 */
+	function startGame() {
+		
+		plates = [];
+		recap.innerHTML = '';
+
+		const wordlist = document.querySelector('input[name="lexicon"]:checked').value;
+
+		document.querySelectorAll('.game-item').forEach(item => show(item));
+		document.querySelectorAll('.start-item').forEach(item => hide(item));
+		
+		show(document.getElementById('score'));
+		show(document.getElementById('accuracy'));
+		hide(slider);
+		hide(recap);
+
+		gameActive = true;
+		score = 0,
+		accuracy = [0, 0];
+		document.getElementById('score').innerHTML = 'Score<br>' + score;
+		document.getElementById('accuracy').innerHTML = 'Accuracy<br>--';
+		
+		button.innerHTML = "Loading...";
+		button.disabled = true;
+		loadLexicon(wordlist).then(() => {
+			hide(button);
+			show(entry);
+			
+			nextPlate('animate-left');
+			setTimeout(() => loopLeft(), Math.round(7000*Math.random()) + 7000);
+			setTimeout(() => loopRight(), Math.round(7000*Math.random()));
+		//	loopSigns();
+			
+			setTimer();
+		});
+	}
+	
+	
+	
+	/**
+	 * 
+	 */
+	function pause() {
+		
+		/* to implement later */
+	}
+	
+
+	
+	/**
+	 * 
+	 */ 
+	function setTimer() {
+	
+		let minsLeft = 5;
+		let secsLeft = 0;
+		
+		const timer = setInterval(function() {
+			document.getElementById('timer').innerHTML = minsLeft + ":" + secsLeft.toString().padStart(2, 0);
+			if(--secsLeft < 0) {
+				if(--minsLeft < 0) {
+					clearInterval(timer);
+					endGame();
+				}
+				else {
+					secsLeft += 60;
+				}
+			}
+			else if(minsLeft === 0) {
+				if(secsLeft <= 15) {
+					document.getElementById('timer').style.backgroundColor = secsLeft % 2 === 0 ? 'rgb(248, 186, 5)' : 'rgb(255, 102, 0)';
+				}
+				if(secsLeft <= 5) {
+					gameActive = false;
+				}
+			}
+		}, 1000);
+	}
+	
+
+	/**
+	 * 
+	 */
 	/*function nextSign() {
 		const nextSign = document.createElement('img');
 		nextSign.className = 'roadside';
@@ -583,183 +583,183 @@
 		document.querySelector('#container').appendChild(nextSign);
 	}*/
 
-    
-    /**
-     * 
-     */
-    class Plate {
+	
+	/**
+	 * 
+	 */
+	class Plate {
 
-        chars;
-        data = plateData[Math.floor(Math.random() * plateData.length)];
-        digits = Math.floor(Math.random() * 1000).toString().padStart(3,0);
-        bestPlay;
-        score = 0;
-        connected = true;
-        
+		chars;
+		data = plateData[Math.floor(Math.random() * plateData.length)];
+		digits = Math.floor(Math.random() * 1000).toString().padStart(3,0);
+		bestPlay;
+		score = 0;
+		connected = true;
+		
 		/**
 		 */
-        constructor() {
-            do {
-                this.chars = "";
-                for(let i = 0; i < 3; i++) {
-                    this.chars += (String.fromCharCode(65 + Math.floor(Math.random() * 26)));
-                } 
-            } while(!topPlays.has(this.chars));
-            
-            this.bestPlay = topPlays.get(this.chars);
-        }
-        
+		constructor() {
+			do {
+				this.chars = "";
+				for(let i = 0; i < 3; i++) {
+					this.chars += (String.fromCharCode(65 + Math.floor(Math.random() * 26)));
+				} 
+			} while(!topPlays.has(this.chars));
+			
+			this.bestPlay = topPlays.get(this.chars);
+		}
+		
 		/**
 		 */
-        makeFrame() {
-            this.frame = document.createElement("div");
-            this.frame.className = 'frame';
+		makeFrame() {
+			this.frame = document.createElement("div");
+			this.frame.className = 'frame';
 
-            this.image = document.createElement('img');
-            this.image.src = '/plates/'+ this.data[0] + '.png';
-            this.image.className = 'plate';
-            
-            this.lettering = document.createElement("p");
-            this.lettering.className = 'lettering';
-            this.lettering.style.fontFamily = this.data[1];
-            this.lettering.style.color = this.data[2];
-            this.lettering.style.top = this.data[3] + 'px';
-            this.lettering.innerHTML = this.chars + " " + this.digits;
-            
-            this.frame.appendChild(this.image);
-            this.frame.appendChild(this.lettering);
-            return this.frame;
-        }
-        
-        /**
-         */
-        explode() {
-            if(this.image === null) return;
-            this.image.zIndex = 0.5;
-            let target = new ImgExplode(this.image);
-    
-            this.lettering.style.opacity = 0;
-            target.explode({
-                maxWidth: 25,
-                minWidth: 5,
-                radius: 231,
-                release: false,
-                recycle: false,
-                explodeTime: 420,
-                canvas: true,
-                round: false,
-                maxAngle: 360,
-                gravity: 5,
-                groundDistance: 7,
-            });
+			this.image = document.createElement('img');
+			this.image.src = '/plates/'+ this.data[0] + '.png';
+			this.image.className = 'plate';
+			
+			this.lettering = document.createElement("p");
+			this.lettering.className = 'lettering';
+			this.lettering.style.fontFamily = this.data[1];
+			this.lettering.style.color = this.data[2];
+			this.lettering.style.top = this.data[3] + 'px';
+			this.lettering.innerHTML = this.chars + " " + this.digits;
+			
+			this.frame.appendChild(this.image);
+			this.frame.appendChild(this.lettering);
+			return this.frame;
+		}
+		
+		/**
+		 */
+		explode() {
+			if(this.image === null) return;
+			this.image.zIndex = 0.5;
+			let target = new ImgExplode(this.image);
+	
+			this.lettering.style.opacity = 0;
+			target.explode({
+				maxWidth: 25,
+				minWidth: 5,
+				radius: 231,
+				release: false,
+				recycle: false,
+				explodeTime: 420,
+				canvas: true,
+				round: false,
+				maxAngle: 360,
+				gravity: 5,
+				groundDistance: 7,
+			});
 
-        }
-    }
+		}
+	}
 
-    
-    /**
-     * 
-     */ 
-    function endGame() {;
+	
+	/**
+	 * 
+	 */ 
+	function endGame() {;
 
-        document.getElementById('notification-area').innerHTML = "GAME OVER";
-        document.getElementById('timer').style.backgroundColor = 'rgb(0, 153, 0)';        
-        document.querySelectorAll('.start-item').forEach(item => show(item));
-        document.querySelectorAll('.game-item').forEach(item => hide(item));
-        
-        entry.value = '';
-        hide(entry);
+		document.getElementById('notification-area').innerHTML = "GAME OVER";
+		document.getElementById('timer').style.backgroundColor = 'rgb(0, 153, 0)';		
+		document.querySelectorAll('.start-item').forEach(item => show(item));
+		document.querySelectorAll('.game-item').forEach(item => hide(item));
+		
+		entry.value = '';
+		hide(entry);
 
-        slider.value = "100";
-        show(slider);
-        show(button);
-        show(recap);
+		slider.value = "100";
+		show(slider);
+		show(button);
+		show(recap);
 
-        for(const plate of plates) {
-            plate.explode();
-        }
+		for(const plate of plates) {
+			plate.explode();
+		}
 
-        button.innerHTML = 'Play again';
+		button.innerHTML = 'Play again';
 
-        //Update database
-        if(score > 20) {
-            let lexicon = document.querySelector('input[name="lexicon"]:checked').value;
-            const plateData = [];
-            for(const plate of plates) {
-                plateData.push({lexicon : lexicon, pattern : plate.chars, score : plate.score});
-            }
-            fetch('update.php', { method: 'POST', body: JSON.stringify(plateData) })
-                    .then(response => response.text())
-            .then(data => console.log(data));
-        }
-        
-        //Display game summary
-        for(const plate of plates) {
-            
-            const frame = plate.makeFrame();
-            plate.lettering.style.top = (Number(plate.data[3])/3) + "px";
+		//Update database
+		if(score > 20) {
+			let lexicon = document.querySelector('input[name="lexicon"]:checked').value;
+			const plateData = [];
+			for(const plate of plates) {
+				plateData.push({lexicon : lexicon, pattern : plate.chars, score : plate.score});
+			}
+			fetch('update.php', { method: 'POST', body: JSON.stringify(plateData) })
+					.then(response => response.text())
+			.then(data => console.log(data));
+		}
+		
+		//Display game summary
+		for(const plate of plates) {
+			
+			const frame = plate.makeFrame();
+			plate.lettering.style.top = (Number(plate.data[3])/3) + "px";
 
-            const bestPlay = document.createElement('span');
-            bestPlay.innerHTML = plate.bestPlay;
-            const yourScore = document.createElement('span');
-            yourScore.style.color = 'orange';
-            yourScore.innerHTML = "+" + plate.score;
-            
-            recap.append(frame, bestPlay, yourScore);
-            show(recap);
-        }
-    }
-    
-    
-    /**
-     * 
-     */
-    function doScore(plate, points) {
-        if(points >= 0) {
-            plate.score += points;
-            const scoreAlert = document.createElement('div');
-            scoreAlert.className = 'scoreAlert';
-            scoreAlert.innerHTML = '+' + points;
-            plate.frame.appendChild(scoreAlert);
-            
-            score += points;
-            accuracy[0] += points;
-            document.getElementById('score').innerHTML = 'Score<br>' + score;
-            
-            setTimeout(function() {
-                scoreAlert.remove();
-            }, 3000);
-        }
-    }
-        
+			const bestPlay = document.createElement('span');
+			bestPlay.innerHTML = plate.bestPlay;
+			const yourScore = document.createElement('span');
+			yourScore.style.color = 'orange';
+			yourScore.innerHTML = "+" + plate.score;
+			
+			recap.append(frame, bestPlay, yourScore);
+			show(recap);
+		}
+	}
+	
+	
+	/**
+	 * 
+	 */
+	function doScore(plate, points) {
+		if(points >= 0) {
+			plate.score += points;
+			const scoreAlert = document.createElement('div');
+			scoreAlert.className = 'scoreAlert';
+			scoreAlert.innerHTML = '+' + points;
+			plate.frame.appendChild(scoreAlert);
+			
+			score += points;
+			accuracy[0] += points;
+			document.getElementById('score').innerHTML = 'Score<br>' + score;
+			
+			setTimeout(function() {
+				scoreAlert.remove();
+			}, 3000);
+		}
+	}
+		
 
 
-    /**
-     * 
-     */
-    function matches(plate, entry) {
-        
-        while(entry.length >= plate.length && plate.length > 0) {
+	/**
+	 * 
+	 */
+	function matches(plate, entry) {
+		
+		while(entry.length >= plate.length && plate.length > 0) {
 
-            if (plate.charAt(0) === entry.charAt(0)) {
-                plate = plate.substring(1);
-            }
-            entry = entry.substring(1);
-        }
-        return plate.length === 0;
-    }
+			if (plate.charAt(0) === entry.charAt(0)) {
+				plate = plate.substring(1);
+			}
+			entry = entry.substring(1);
+		}
+		return plate.length === 0;
+	}
 
-    /**
-     *
-     */
-    function submit(entry) {
+	/**
+	 *
+	 */
+	function submit(entry) {
 	
 		if(lexicon.contains(entry.toUpperCase())) {
 			for(plate of plates) {
-			    if(!plate.connected) continue;
+				if(!plate.connected) continue;
 				if(plate.bestPlay === entry.toUpperCase()) {
-				    const target = plate;
-					doScore(plate, 3 - plate.score); 	    //best play
+					const target = plate;
+					doScore(plate, 3 - plate.score); 		//best play
 					setTimeout(() => target.explode(), 300);
 				}
 				else if(matches(plate.chars, entry.toUpperCase())) {
@@ -778,59 +778,59 @@
 	 *
 	 */
 	function slide(value) {
-        recap.scrollTop = (recap.scrollHeight - recap.clientHeight + 7)*(1 - value/100);
-    }
+		recap.scrollTop = (recap.scrollHeight - recap.clientHeight + 7)*(1 - value/100);
+	}
 
 </script>
-    
+	
 </head>
 
-<!-- ///////////////////////////////// -->
-<!-- //////////    HTML     ////////// -->
-<!-- ///////////////////////////////// -->
+<!-- ////////////////////////////////// -->
+<!-- //////////     HTML     ////////// -->
+<!-- ////////////////////////////////// -->
 
 <div id='container'>
-    <div id='controls'>
-        <label id="name-of-game" class ='start-item'>License to Spell</label>
-        <div id='lexicon-chooser' class='start-item'>
-            Word list:<br>
-            <input id="CSW21" type="radio" name="lexicon" value="CSW21" checked="checked">
-            <label for="words">CSW21</label>
-            <input id="NWL20" type="radio" name="lexicon" value="NWL20">
-            <label for="words">NWL20</label>
-            <input id="CEL" type="radio" name="lexicon" value="CEL">
-            <label for="words">Common words</label>
-            <p id='copyright'></p>
-        </div>
-       
-        <div id="how-to" class='start-item'>
-            <h2>How to play</h2>
-            <p>Enter any word with the three letters of the plate in that order</p>
-            <p>1 point: any valid word</p>
-            <p>2 points: the shortest possible word</p>
-            <p>3 points: shortest word and first alphabetically</p>
-        </div>
-     
-        <button id="start-button" onclick='startGame()'>Start game</button>
-        <label id='notification-area' class='start-item' ></label>
-        <input id="entry" type="text" placeholder="Enter a word" onfocus="this.value=''; this.placeholder=''">
-        <label id='timer' class='game-item'>5:00</label>
-        <label id='score' class='hidden'>Score<br>0</label>        
-        <label id='accuracy' class='hidden'>Accuracy<br>--</label>
-    </div>
-    
-    <svg class='backdrop' width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <polygon class='road' points="0,50 100,50 100,100 0,100" fill='rgb(92,94,98)'/>
-        <polygon class='sky' points="0,0 100,00 100,50 0,50" fill='skyblue'/>
-        <polygon class='left-margin' points="0,100 3,100 50,50" fill='rgb(248, 186, 5)'/>
-        <polygon class='right-margin' points="100,100 97,100 50,50" fill='rgb(240, 241, 234)'/>
-        <polygon class='shoulder' points="0,100 0,50 50,50 100,100 100,50 50,50" fill='green'/>
-        <polygon class='dash' points="49.5,75 50.5,75 51,100 49, 100" fill='rgb(240, 241, 234)'/>
-        <polygon class='dash delayed' points="49.5,75 50.5,75 51,100 49, 100" fill='rgb(240, 241, 234)'/>
-    </svg>
+	<div id='controls'>
+		<label id="name-of-game" class ='start-item'>License to Spell</label>
+		<div id='lexicon-chooser' class='start-item'>
+			Word list:<br>
+			<input id="CSW21" type="radio" name="lexicon" value="CSW21" checked="checked">
+			<label for="words">CSW21</label>
+			<input id="NWL20" type="radio" name="lexicon" value="NWL20">
+			<label for="words">NWL20</label>
+			<input id="CEL" type="radio" name="lexicon" value="CEL">
+			<label for="words">Common words</label>
+			<p id='copyright'></p>
+		</div>
+	   
+		<div id="how-to" class='start-item'>
+			<h2>How to play</h2>
+			<p>Enter any word with the three letters of the plate in that order</p>
+			<p>1 point: any valid word</p>
+			<p>2 points: the shortest possible word</p>
+			<p>3 points: shortest word and first alphabetically</p>
+		</div>
+	 
+		<button id="start-button" onclick='startGame()'>Start game</button>
+		<label id='notification-area' class='start-item' ></label>
+		<input id="entry" type="text" placeholder="Enter a word" onfocus="this.value=''; this.placeholder=''">
+		<label id='timer' class='game-item'>5:00</label>
+		<label id='score' class='hidden'>Score<br>0</label>		
+		<label id='accuracy' class='hidden'>Accuracy<br>--</label>
+	</div>
+	
+	<svg class='backdrop' width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+		<polygon class='road' points="0,50 100,50 100,100 0,100" fill='rgb(92,94,98)'/>
+		<polygon class='sky' points="0,0 100,00 100,50 0,50" fill='skyblue'/>
+		<polygon class='left-margin' points="0,100 3,100 50,50" fill='rgb(248, 186, 5)'/>
+		<polygon class='right-margin' points="100,100 97,100 50,50" fill='rgb(240, 241, 234)'/>
+		<polygon class='shoulder' points="0,100 0,50 50,50 100,100 100,50 50,50" fill='green'/>
+		<polygon class='dash' points="49.5,75 50.5,75 51,100 49, 100" fill='rgb(240, 241, 234)'/>
+		<polygon class='dash delayed' points="49.5,75 50.5,75 51,100 49, 100" fill='rgb(240, 241, 234)'/>
+	</svg>
 
-    <div id="recap" class="hidden"></div>
-    <input id="slider" class="hidden" type="range" min="1" max="100" value="1" orient="vertical" oninput='slide(value)'>
+	<div id="recap" class="hidden"></div>
+	<input id="slider" class="hidden" type="range" min="1" max="100" value="1" orient="vertical" oninput='slide(value)'>
 
 </div>
 
