@@ -1,7 +1,7 @@
 [
 ["AL", "penitentiary gothic", "blue", "-105"],
 ["AR", "penitentiary gothic", "blue", "-102"],
-["AZ", "penitentiary gothic", "black", "-123"],
+["AZ", "penitentiary gothic", "black", "-120"],
 ["CA", "penitentiary gothic", "yellow", "-102"],
 ["CA2", "penitentiary gothic", "yellow", "-102"],
 ["CO", "LicensePlate", "white", "-69"],
@@ -26,7 +26,7 @@
 ["NJ", "LicensePlate", "black", "-66"],
 ["NM", "LicensePlate", "red", "-81"],
 ["NV", "LicensePlate", "darkblue", "-60"],
-["NV2", "LicensePlate", "darkblue", "-72"],
+["NV2", "LicensePlate", "darkblue", "-66"],
 ["NY2", "penitentiary gothic", "darkblue", "-108"],
 ["NY3", "penitentiary gothic", "darkblue", "-111"],
 ["NY4", "penitentiary gothic", "yellow", "-115"],
