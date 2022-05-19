@@ -178,13 +178,14 @@
         position: absolute;
         width: 300px;
         height: 150px;
-        animation-timing-function: cubic-bezier(1,.2,.95,.6);
+        transform-origin: bottom center;
+        animation-timing-function: cubic-bezier(.1,.1,.97,.24);
         animation-iteration-count: 1;
         animation-fill-mode: forwards;
         animation-duration: 15s;
         font-size: 96px;
     }
-
+    
     #container > .frame > .plate {
         position: absolute;
         width: 100%;
@@ -314,17 +315,17 @@
 		to { transform: translateY(23px) scale(1); }
     }
 
-    @keyframes approach-left {
-		from { transform: translate(49vw, 52vh) translate(-150px, -75px) scale(0.10); }
-		75% { opacity: 100; }
-		to { transform: translate(25vw, 100vh) translate(-150px, -75px) scale(1.25); opacity: 0; }
-    }
-    
-    @keyframes approach-right {
-		from { transform: translate(51vw, 52vh) translate(-150px, -75px) scale(0.10); }
-		75% { opacity: 100; }
-		to { transform: translate(75vw, 100vh) translate(-150px, -75px) scale(1.25); opacity: 0; }
-    }
+@keyframes approach-left {
+		from { transform: translate(-150px, -150px) translate(49.5vw, 51vh) scale(0.03); }
+  75% {opacity: 1;}
+		to { transform:  translate(-100px, -200px) translate(20vw, 110vh) scale(1.3); opacity: 0; }
+}
+
+@keyframes approach-right {
+		from { transform: translate(-150px, -150px) translate(50.5vw, 51vh) scale(0.03); }
+  75% {opacity: 1;}
+		to { transform:  translate(-200px, -200px) translate(80vw, 110vh) scale(1.3); opacity: 0;  }
+}
     
     @keyframes fade-up {
         from { top: -50%; opacity: 1; }
@@ -366,13 +367,14 @@
     let button,
         entry,
         recap,
+        slider,
         plateData,
         plates = [],
         gameActive = false,
         score = 0,
         accuracy = [0, 0];
         
-    fetch("plata.json")
+    fetch("plates.json")
         .then(response => response.json())
         .then(data => plateData = data);
         
@@ -399,6 +401,13 @@
         entry = document.getElementById('entry');            
         button = document.getElementById('start-button');
         recap = document.getElementById('recap');
+        slider = document.getElementById('slider');
+
+        recap.onwheel = event => {
+            event.preventDefault();
+            recap.scrollTop += event.deltaY;
+            slider.value = 100*(1 - recap.scrollTop/(recap.scrollHeight - recap.clientHeight + 7));
+        }
 
         document.getElementById('CSW21').onclick = function () {
             document.getElementById('copyright').innerHTML = 'Collins Official Scrabble Words,<br>an imprint of HarperCollins Publishers Limited.';
@@ -485,7 +494,6 @@
     /**
      *
      */
-    
     function startGame() {
         
         plates = [];
@@ -498,7 +506,7 @@
         
         show(document.getElementById('score'));
         show(document.getElementById('accuracy'));
-        hide(document.getElementById('slider'));
+        hide(slider);
         hide(recap);
 
         gameActive = true;
@@ -608,7 +616,7 @@
             this.frame.className = 'frame';
 
             this.image = document.createElement('img');
-            this.image.src = '/plates/'+ this.data[0] + '.jpg';
+            this.image.src = '/plates/'+ this.data[0] + '.png';
             this.image.className = 'plate';
             
             this.lettering = document.createElement("p");
@@ -661,8 +669,9 @@
         
         entry.value = '';
         hide(entry);
-        show(document.getElementById('slider'));
-        document.getElementById('slider').value = "100";
+
+        slider.value = "100";
+        show(slider);
         show(button);
         show(recap);
 
@@ -765,11 +774,11 @@
 		}
 	}
 	
-	/**/
-	
+	/**
+	 *
+	 */
 	function slide(value) {
-        console.log(value + " = " + value + ", scrollHeight = " + recap.scrollheight + ", clientHeight = " + recap.clientHeight);
-        recap.scrollTop = (recap.scrollHeight - recap.clientHeight)*(1 - value/100);
+        recap.scrollTop = (recap.scrollHeight - recap.clientHeight + 7)*(1 - value/100);
     }
 
 </script>
