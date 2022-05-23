@@ -153,8 +153,8 @@
 	}
 
 	.backdrop {
-		position: absolute;
-		z-index: 0;
+	  position: absolute;
+	  z-index: 0;
 	}
 
 	.dash {
@@ -307,25 +307,25 @@
 	.paused { animation-play-state: paused; }
 
 	@keyframes approach-side {
-        from { transform: translate(54vw, 51vh) translate(-150px, -75px) scale(0.04); }
-        to { transform: translate(174vw, 81vh) translate(-150px, -75px) scale(1); }
+	  from { transform: translate(54vw, 51vh) translate(-150px, -75px) scale(0.04); }
+	  to { transform: translate(174vw, 81vh) translate(-150px, -75px) scale(1); }
 	}
 	
 	@keyframes approach-center {
-        from { transform: scale(0.04); }
+		from { transform: scale(0.04); }
 		to { transform: translateY(23px) scale(1); }
 	}
 
     @keyframes approach-left {
-        from { transform: translate(-150px, -150px) translate(49.5vw, 51vh) scale(0.03); }
+		from { transform: translate(-150px, -150px) translate(49.5vw, 51vh) scale(0.03); }
         75% {opacity: 1;}
-        to { transform:  translate(-100px, -200px) translate(20vw, 110vh) scale(1.3); opacity: 0; }
+		to { transform:  translate(-100px, -200px) translate(20vw, 110vh) scale(1.3); opacity: 0; }
     }
 
     @keyframes approach-right {
-        from { transform: translate(-150px, -150px) translate(50.5vw, 51vh) scale(0.03); }
+		from { transform: translate(-150px, -150px) translate(50.5vw, 51vh) scale(0.03); }
         75% {opacity: 1;}
-        to { transform:  translate(-200px, -200px) translate(80vw, 110vh) scale(1.3); opacity: 0;  }
+		to { transform:  translate(-200px, -200px) translate(80vw, 110vh) scale(1.3); opacity: 0;  }
     }
 	
 	@keyframes fade-up {
@@ -377,14 +377,22 @@
 		
 	fetch("plates.json")
 		.then(response => response.json())
-		.then(data => plateData = data);
-		
-		
+		.then(data => plateData = data)
+		.then(() => {
+    		for (let data of plateData) {
+                const img = document.createElement('img');
+                img.src = '/plates/'+ data[0] + '.png';
+                img.className = 'plate';
+                data[0] = img;
+            }
+		});
+
+
 	function show(item) {
 		item.style.opacity = 1;
 		item.style.zIndex = 1;
 		item.disabled = false;
-	}	
+	}
 	function hide(item) {
 		item.style.opacity = 0;
 		item.style.zIndex = -1;
@@ -568,15 +576,13 @@
 	}*/
 
 	
-	/**
+		/**
 	 *
 	 */
-	async function nextPlate(lane) {
+	function nextPlate(lane) {
 		const nextPlate = new Plate();
-		const frame = await nextPlate.makeFrame();
-
-
-		frame.classList.add(lane);		
+		const frame = nextPlate.makeFrame();
+		frame.classList.add(lane);
 		document.querySelector('#container').append(frame);
 		plates.push(nextPlate);
 		setTimeout(function() {
@@ -618,16 +624,14 @@
 			this.frame = document.createElement("div");
 			this.frame.className = 'frame';
 
+            this.image = this.data[0].cloneNode();
+			
 			this.lettering = document.createElement("p");
 			this.lettering.className = 'lettering';
 			this.lettering.style.fontFamily = this.data[1];
 			this.lettering.style.color = this.data[2];
 			this.lettering.style.top = this.data[3] + 'px';
 			this.lettering.innerHTML = this.chars + " " + this.digits;
-
-			this.image = document.createElement('img');
-			this.image.src = '/plates/'+ this.data[0] + '.png';
-			this.image.className = 'plate';
 			
 			this.frame.appendChild(this.image);
 			this.frame.appendChild(this.lettering);
@@ -664,7 +668,7 @@
 	 * 
 	 */ 
 	function endGame() {;
-
+	
 		document.getElementById('notification-area').innerHTML = "GAME OVER";
 		document.getElementById('timer').style.backgroundColor = 'rgb(0, 153, 0)';		
 		document.querySelectorAll('.start-item').forEach(item => show(item));
@@ -692,8 +696,8 @@
 				plateData.push({lexicon : lexicon, pattern : plate.chars, score : plate.score});
 			}
 			fetch('update.php', { method: 'POST', body: JSON.stringify(plateData) })
-					.then(response => response.text())
-			.then(data => console.log(data));
+                .then(response => response.text())
+                .then(data => console.log(data));
 		}
 		
 		//Display game summary
