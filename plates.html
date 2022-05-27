@@ -395,7 +395,7 @@
     }
 
     @font-face {
-    	font-family: 'penitentiary gothic';
+    font-family: 'penitentiary gothic';
         src: url('fonts/e-phemera_-_penitentiary_gothic_fill-webfont.woff2') format('woff2'),
             url('fonts/e-phemera_-_penitentiary_gothic_fill-webfont.woff') format('woff'),
             url("fonts/E-phemera - Penitentiary Gothic Fill.ttf");
@@ -578,8 +578,8 @@
 			show(entry);
 			
 			nextPlate('animate-left');
-			setTimeout(() => loopLeft(), Math.round(6000*Math.random()) + 6000);
-			setTimeout(() => loopRight(), Math.round(6000*Math.random()));
+			setTimeout(() => loopLeft(), Math.round(5000*Math.random()) + 5000);
+			setTimeout(() => loopRight(), Math.round(5000*Math.random()));
 		//	loopSigns();
 			
 			setTimer();
@@ -752,7 +752,7 @@
 		button.innerHTML = 'Play again';
 
 		//Update database
-		const file = score > 10 ? 'update.php' : 'select.php';
+		const file = score > 20 ? 'update.php' : 'select.php';
 		const lexicon = document.querySelector('input[name="lexicon"]:checked').value;
 		const gameData = [];
 		for(const plate of plates) {
@@ -761,9 +761,9 @@
 		fetch(file, { method: 'POST', body: JSON.stringify(gameData) })
 			.then(response => response.text())
 			.then(text => {
-			    const json = JSON.parse(text))
-			    console.log("database updated");
-				for(let i = 0; i < data.length; i++) {
+			    const json = JSON.parse(text);
+
+				for(let i = 0; i < json.length; i++) {
 					plates[i].histogramData = json[i].slice(2);
 				}
 			})
