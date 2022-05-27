@@ -217,6 +217,7 @@
 	.lettering {
 		position: absolute;
 		text-align: center;
+		line-height: 100%;
 		width: 100%;
 	}
 	
@@ -243,13 +244,11 @@
 		overflow-y: hidden;
 		top: 52vh;
 		left: 0; 
-		right: 0; 
-		margin-left: auto; 
-		margin-right: auto; 
+		right: 0;
+		margin: auto;
 		-ms-overflow-style: none;
 		scrollbar-width: none;
 		white-space: nowrap;
-		z-index: 3;
 	}
 	
 	#recap::-webkit-scrollbar {
@@ -280,16 +279,19 @@
 	}
 	
 	#slider {
-		position: absolute;
-		top: 52vh;
-		left: calc(50vw + 215px);
-		-webkit-appearance: none;
-		width: 15px;
-		height: 44vh;
+        transform-origin: left;
+        transform: rotate(90deg);
+        position: absolute;
+        top: 50vh;
+        left: calc(50vw + 227px);
+        -webkit-appearance: none;
+        width: 44vh;
+        height: 15px;
 		background: rgba(0,0,0,0.2);
 		outline: none;
 		border: 6px solid black;
 		border-radius: 8px;
+		overflow: hidden;
 	}
 	
 	#slider::-moz-range-thumb {
@@ -297,8 +299,12 @@
 		height: 16px;
 		background: purple;
 		cursor: pointer;
-		border: 4px solid black;
 		border-radius: 0px;
+        border-top-width: 0px;
+        border-right-width: 4px;
+        border-bottom-width: 0px;
+        border-left-width: 4px;
+        border-color:black;
 	}
 	
 	#slider::-webkit-slider-thumb {
@@ -308,7 +314,12 @@
 		height: 16px;
 		background: purple;
 		cursor: pointer;
-		border: 4px solid black;
+		border-radius: 0px;
+        border-top-width: 0px;
+        border-right-width: 4px;
+        border-bottom-width: 0px;
+        border-left-width: 4px;
+        border-color:black;
 		border-radius: 0px;
 	}
 
@@ -369,25 +380,37 @@
 		to { top: -200%; opacity: 0; }
 	}
 	
-	@font-face{
-		font-family: "penitentiary gothic";
-		src: url("fonts/E-phemera - Penitentiary Gothic Fill.ttf");
-	}
-	
 	@font-face {
 		font-family: 'highway gothic';
 		src: url("fonts/TRAFFIC2.TTF");
 	}
 
-	@font-face {
-		font-family: 'LicensePlate';
-		src: url("fonts/LicensePlate.ttf");
-	}
-	
-	@font-face {
-		font-family: 'edge-racer';
-		src: url("fonts/edgeracerital.ttf");
-	}
+    @font-face {
+        font-family: 'edge-racer';
+        src: url('fonts/edgeracerital-webfont.woff2') format('woff2'),
+            url('fonts/edgeracerital-webfont.woff') format('woff'),
+            url("fonts/E-phemera - Penitentiary Gothic Fill.ttf");
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+    	font-family: 'penitentiary gothic';
+        src: url('fonts/e-phemera_-_penitentiary_gothic_fill-webfont.woff2') format('woff2'),
+            url('fonts/e-phemera_-_penitentiary_gothic_fill-webfont.woff') format('woff'),
+            url("fonts/E-phemera - Penitentiary Gothic Fill.ttf");
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'LicensePlate';
+        src: url('fonts/licenseplate-webfont.woff2') format('woff2'),
+            url('fonts/licenseplate-webfont.woff') format('woff'),
+            url("fonts/LicensePlate.ttf");
+        font-weight: normal;
+        font-style: normal;
+    }
 </style>
 	
 <!-- ////////////////////////////////// -->
@@ -411,7 +434,7 @@
 		score = 0,
 		accuracy = [0, 0];
 		
-	fetch("plates.json")
+	fetch("plates.json", {cache: "no-store"})
 		.then(response => response.json())
 		.then(data => plateData = data)
 		.then(() => {
@@ -424,15 +447,19 @@
 		});
 
 
-	function show(item) {
-		item.style.opacity = 1;
-		item.style.zIndex = 1;
-		item.disabled = false;
+	function show() {
+	    for(item of arguments) {
+    		item.style.opacity = 1;
+    		item.style.zIndex = 1;
+    		item.disabled = false;
+	    }
 	}
-	function hide(item) {
-		item.style.opacity = 0;
-		item.style.zIndex = -1;
-		item.disabled = true;
+	function hide() {
+	    for(item of arguments) {
+    		item.style.opacity = 0;
+    		item.style.zIndex = -1;
+    		item.disabled = true;
+	    }
 	}
 
 	/**
@@ -450,8 +477,9 @@
 
 		recap.onwheel = event => {
 			event.preventDefault();
+
 			recap.scrollTop += event.deltaY;
-			slider.value = 100*(1 - recap.scrollTop/(recap.scrollHeight - recap.clientHeight + 7));
+			slider.value = 100*recap.scrollTop/(recap.scrollHeight - recap.clientHeight);
 		}
 
 		document.getElementById('CSW21').onclick = function () {
@@ -535,8 +563,7 @@
 		
 		show(document.getElementById('score'));
 		show(document.getElementById('accuracy'));
-		hide(slider);
-		hide(recap);
+		hide(slider, recap);
 
 		gameActive = true;
 		score = 0,
@@ -614,7 +641,7 @@
 
 	
 	/**
-	 * Creates a plate and puts it on the road
+	 * Creates a plate and sets it on the road
 	 */
 	function nextPlate(lane) {
 		const nextPlate = new Plate();
@@ -641,7 +668,7 @@
 		bestPlay;
 		score = 0;
 		connected = true;
-		histogramData;
+		histogramData = [0,0,0,0];
 		
 		/**
 		 */
@@ -715,10 +742,8 @@
 		entry.value = '';
 		hide(entry);
 
-		slider.value = "100";
-		show(slider);
-		show(button);
-		show(recap);
+		slider.value = "0";
+		show(slider, button, recap);
 
 		for(const plate of plates) {
 			plate.explode();
@@ -727,7 +752,7 @@
 		button.innerHTML = 'Play again';
 
 		//Update database
-		const file = score > 20 ? 'update.php' : 'select.php';
+		const file = score > 10 ? 'update.php' : 'select.php';
 		const lexicon = document.querySelector('input[name="lexicon"]:checked').value;
 		const gameData = [];
 		for(const plate of plates) {
@@ -735,12 +760,15 @@
 		}
 		fetch(file, { method: 'POST', body: JSON.stringify(gameData) })
 			.then(response => response.text())
-			.then(text => JSON.parse(text))
-			.then(data => {
+			.then(text => {
+			    const json = JSON.parse(text))
+			    console.log("database updated");
 				for(let i = 0; i < data.length; i++) {
-					plates[i].histogramData = data[i].slice(2);
+					plates[i].histogramData = json[i].slice(2);
 				}
-				
+			})
+			.catch(() => console.log("could not connect to database"))
+			.finally(() => {
 				//Display game summary
 				for(plate of plates) {
 
@@ -770,9 +798,6 @@
 							rect.setAttribute("height", barHeight);
 							rect.setAttribute("width", barWidth);
 							rect.style.fill = colors[i];
-/*							const title = document.createElementNS("http://www.w3.org/2000/svg", 'title'); 
-							title.textContent = "+" + i +": " + data[i];
-							rect.appendChild(title);*/
 							histogram.appendChild(rect);
 						}
 
@@ -784,9 +809,10 @@
 					recap.append(frame, bestPlay, yourScore);
 				}
 			show(recap);
+			recap.style.zIndex = 3;
+
 			});
 	}
-
 
 	
 	
@@ -857,7 +883,8 @@
 	 *
 	 */
 	function slide(value) {
-		recap.scrollTop = (recap.scrollHeight - recap.clientHeight + 30)*(1 - value/100);
+	    console.log(value)
+		recap.scrollTop = (recap.scrollHeight - recap.clientHeight)*value/100;
 	}
 
 </script>
@@ -909,7 +936,7 @@
 	</svg>
 
 	<div id="recap" class="hidden"></div>
-	<input id="slider" class="hidden" type="range" min="1" max="100" value="1" orient="vertical" oninput='slide(value)'>
+	<input id="slider" class="hidden" type="range" min="1" max="100" value="1" oninput='slide(value)'>
 
 </div>
 
