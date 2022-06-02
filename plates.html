@@ -111,6 +111,7 @@
 	}
 	td:nth-child(2n) {
 	    text-align: right;
+	    white-space: nowrap;
 	}
 	
 	#start-button {
@@ -416,8 +417,8 @@
         font-style: normal;
     }
 
-	@font-face {
-	    font-family: 'penitentiary gothic';
+    @font-face {
+        font-family: 'penitentiary gothic';
         src: url('fonts/e-phemera_-_penitentiary_gothic_fill-webfont.woff2') format('woff2'),
             url('fonts/e-phemera_-_penitentiary_gothic_fill-webfont.woff') format('woff'),
             url("fonts/E-phemera - Penitentiary Gothic Fill.ttf");
@@ -502,6 +503,13 @@
 			recap.scrollTop += event.deltaY;
 			slider.value = 100*recap.scrollTop/(recap.scrollHeight - recap.clientHeight);
 		}
+		
+		document.querySelectorAll(':not(#entry)').forEach(item => item.onmousedown = e => {
+		    if(gameActive){
+		        e.stopPropagation();
+		        e.preventDefault(); //keep focus on entry
+		    }
+		});
 
 		document.getElementById('CSW21').onclick = function () {
 			document.getElementById('copyright').innerHTML = 'Collins Official Scrabble Words,<br>an imprint of HarperCollins Publishers Limited.';
@@ -585,6 +593,7 @@
 		show(document.getElementById('score'));
 		show(document.getElementById('accuracy'));
 		hide(slider, recap);
+		entry.focus();
 
 		gameActive = true;
 		score = 0,
@@ -932,10 +941,10 @@
 		
 		<table id="how-to" class='start-item'>
 		    <tr><th colspan="2">How to play</th>                                    </tr>
-		    <tr><td colspan ="2">Make words using the plate's letters in order</td></tr>	
-			<tr><td>Any valid word</td>                             <td>1 point</td></tr>
-			<tr><td>Shortest possible word</td>                     <td>2 points</td></tr>
-			<tr><td>Shortest and first alphabetically</td>          <td>3 points</td></tr>
+		    <tr><td colspan ="2">Make words using the given letters in order</td></tr>	
+			<tr><td>Any valid word</td>                             <td>+1 point</td></tr>
+			<tr><td>Shortest possible word</td>                     <td>+2 points</td></tr>
+			<tr><td>Shortest and first alphabetically</td>          <td>+3 points</td></tr>
 		</table>
 	 
 		<button id="start-button" onclick='startGame()'>Start game</button>
