@@ -13,16 +13,20 @@
 <style>
 	
 	body {
-		margin:0;
+		margin: 0;
 		-ms-overflow-style: none;
 		scrollbar-width: none;
 		overflow: hidden;
 	}
 	
 	#container {
+				width: 100vw;
+		height: 100vh;
+perspective: 50px;
 		-ms-overflow-style: none;
 		scrollbar-width: none;
 		overflow: hidden;
+
 	}
 	
 	#controls {
@@ -77,9 +81,9 @@
 	}
 	
 	input[type=radio] {
-        height: 20px;
-        transform: scale(1.3);
-    }
+		height: 20px;
+		transform: scale(1.3);
+	}
 	
 	#copyright {
 		margin-top: 3px;
@@ -104,14 +108,14 @@
 	}
 	
 	th {
-	    border-bottom: 2px solid white;
-	    text-align: center;
-	    font-weight: normal;
-	    font-size: 24px;
+		border-bottom: 2px solid white;
+		text-align: center;
+		font-weight: normal;
+		font-size: 24px;
 	}
 	td:nth-child(2n) {
-	    text-align: right;
-	    white-space: nowrap;
+		text-align: right;
+		white-space: nowrap;
 	}
 	
 	#start-button {
@@ -133,6 +137,7 @@
 		grid-row: 1/2;
 		justify-self: end;
 		align-self: start;
+		transform-origin: top right;
 		width: max(16%, 160px);
 		background-color: rgb(248, 186, 5);
 		border: black solid 2px;
@@ -163,6 +168,7 @@
 		justify-self: start;
 		align-self: start;
 		transform-origin: top left;
+		width: 67px;
 		background-color: rgb(0, 153, 0);
 		border-radius: 5px;
 		border: white solid 2px;
@@ -184,15 +190,113 @@
 		border-radius: 5px;
 		font-size: 36px;
 	}
-
+	
+	#box {
+		position: absolute;
+		transform: translateX(100vw) translateY(100vh) translate(450px,-300px) translateZ(-200px);
+		animation-timing-function: cubic-bezier(1, 0, 1, .5);
+		animation-iteration-count: 1;
+		animation-fill-mode: forwards;
+		animation-duration: 2s;	
+	}
+	
+	#links {
+		position: absolute;
+		top: 150px;
+		left: 410px;
+		transform: scale(3);
+		display: flex;
+		flex-direction: column;
+		row-gap: 8px;
+		touch-action: manipulation;
+		animation-timing-function: cubic-bezier(1, 0, 1, .5);
+		animation-iteration-count: 1;
+		animation-fill-mode: forwards;
+		animation-duration: 2s;	
+	}
+	
+	#cow {
+		position: absolute;
+		width: 900px;
+		height: 600px;
+	}
+	
+	#woogles {
+		color: rgb(17, 101, 158);
+		-webkit-text-decoration-skip: objects;
+		cursor: pointer;
+		text-decoration: none;
+		font-family: Mulish, sans-serif;
+		display: flex;
+		justify-content: flex-end;
+	}
+	
+	#woogles-w {
+		color: rgb(201, 240, 255);
+		font-size: 27px;
+		left: 6px;
+		letter-spacing: .16em;
+		font-weight: 700;
+		position: relative;
+		-webkit-transform: translateX(-3px) rotate(-11deg);
+		transform: translateX(-3px) rotate(-11deg);
+	}
+	#woogles-rect {
+		background-color: rgb(17, 101, 158);
+		align-items: center;
+		border-radius: 4px;
+		display: flex;
+		height: 40px;
+		justify-content: center;
+		width: 40px;
+	}
+	#woogles-name {
+		color: rgb(17, 101, 158);
+		align-self: center;
+		flex: none;
+		font-size: 28px;
+		font-weight: 900;
+		letter-spacing: -.03em;
+		margin-left: 9px;
+	}
+	
+	#anagrams {
+		color: black;
+		-webkit-text-decoration-skip: objects;
+		text-decoration: none;
+		cursor: pointer;
+		font-family: Courier, sans-serif;
+		font-weight: bold;
+		display: flex;
+	}
+	#anagrams-a {
+		font-size: 45px;
+		position: relative;
+	}
+	#anagrams-rect {
+		background-color: yellow;
+		align-items: center;
+		border-radius: 2px;
+		display: flex;
+		height: 38px;
+		justify-content: center;
+		width: 33px;
+	}
+	#anagrams-name {
+		align-self: center;
+		flex: none;
+		font-size: 32px;
+		margin-right: 8px;
+	}
+	
 	.hidden {
 		opacity: 0;
 		z-index: -1;
 	}
 
 	#backdrop {
-	    width: 100%;
-	    height: 100%;
+		width: 100%;
+		height: 100%;
 		position: absolute;
 		z-index: 0;
 		-ms-overflow-style: none;
@@ -302,14 +406,14 @@
 	}
 	
 	#slider {
-        transform-origin: left;
-        transform: rotate(90deg);
-        position: absolute;
-        top: 50vh;
-        left: calc(50vw + 227px);
-        -webkit-appearance: none;
-        width: 44vh;
-        height: 15px;
+		transform-origin: left;
+		transform: rotate(90deg);
+		position: absolute;
+		top: 50vh;
+		left: calc(50vw + 227px);
+		-webkit-appearance: none;
+		width: 44vh;
+		height: 15px;
 		background: rgba(0,0,0,0.2);
 		outline: none;
 		border: 6px solid black;
@@ -323,11 +427,11 @@
 		background: purple;
 		cursor: pointer;
 		border-radius: 0px;
-        border-top-width: 0px;
-        border-right-width: 4px;
-        border-bottom-width: 0px;
-        border-left-width: 4px;
-        border-color:black;
+		border-top-width: 0px;
+		border-right-width: 4px;
+		border-bottom-width: 0px;
+		border-left-width: 4px;
+		border-color:black;
 	}
 	
 	#slider::-webkit-slider-thumb {
@@ -338,15 +442,15 @@
 		background: purple;
 		cursor: pointer;
 		border-radius: 0px;
-        border-top-width: 0px;
-        border-right-width: 4px;
-        border-bottom-width: 0px;
-        border-left-width: 4px;
-        border-color:black;
+		border-top-width: 0px;
+		border-right-width: 4px;
+		border-bottom-width: 0px;
+		border-left-width: 4px;
+		border-color:black;
 		border-radius: 0px;
 	}
 
-	.scoreAlert {
+	.score-alert {
 		color: orange;
 		font-family: sans-serif;
 		font-size: 65px;
@@ -374,11 +478,12 @@
 	
 	.animate-left { animation-name: approach-left; }
 	.animate-right { animation-name: approach-right; }
+	.animate-shoulder { animation-name: approach-shoulder; }
 	.paused { animation-play-state: paused; }
-
-	@keyframes approach-side {
-		from { transform: translate(54vw, 51vh) translate(-150px, -75px) scale(0.04); }
-		to { transform: translate(174vw, 81vh) translate(-150px, -75px) scale(1); }
+	
+	@keyframes approach-shoulder {
+		from {transform: translateX(100vw) translateY(100vh) translate(450px,-300px) translateZ(-200px) rotateY(0);}
+		to { transform: translateX(100vw) translateY(100vh) translate(450px,-300px) translateZ(100px) rotateY(-0.01turn); }
 	}
 	
 	@keyframes approach-center {
@@ -408,32 +513,32 @@
 		src: url("fonts/TRAFFIC2.TTF");
 	}
 
-    @font-face {
-        font-family: 'edge-racer';
-        src: url('fonts/edgeracerital-webfont.woff2') format('woff2'),
-            url('fonts/edgeracerital-webfont.woff') format('woff'),
-            url("fonts/E-phemera - Penitentiary Gothic Fill.ttf");
-        font-weight: normal;
-        font-style: normal;
-    }
+	@font-face {
+		font-family: 'edge-racer';
+		src: url('fonts/edgeracerital-webfont.woff2') format('woff2'),
+			url('fonts/edgeracerital-webfont.woff') format('woff'),
+			url("fonts/E-phemera - Penitentiary Gothic Fill.ttf");
+		font-weight: normal;
+		font-style: normal;
+	}
 
-    @font-face {
-        font-family: 'penitentiary gothic';
-        src: url('fonts/e-phemera_-_penitentiary_gothic_fill-webfont.woff2') format('woff2'),
-            url('fonts/e-phemera_-_penitentiary_gothic_fill-webfont.woff') format('woff'),
-            url("fonts/E-phemera - Penitentiary Gothic Fill.ttf");
-        font-weight: normal;
-        font-style: normal;
-    }
+	@font-face {
+		font-family: 'penitentiary gothic';
+		src: url('fonts/e-phemera_-_penitentiary_gothic_fill-webfont.woff2') format('woff2'),
+			url('fonts/e-phemera_-_penitentiary_gothic_fill-webfont.woff') format('woff'),
+			url("fonts/E-phemera - Penitentiary Gothic Fill.ttf");
+		font-weight: normal;
+		font-style: normal;
+	}
 
-    @font-face {
-        font-family: 'LicensePlate';
-        src: url('fonts/licenseplate-webfont.woff2') format('woff2'),
-            url('fonts/licenseplate-webfont.woff') format('woff'),
-            url("fonts/LicensePlate.ttf");
-        font-weight: normal;
-        font-style: normal;
-    }
+	@font-face {
+		font-family: 'LicensePlate';
+		src: url('fonts/licenseplate-webfont.woff2') format('woff2'),
+			url('fonts/licenseplate-webfont.woff') format('woff'),
+			url("fonts/LicensePlate.ttf");
+		font-weight: normal;
+		font-style: normal;
+	}
 </style>
 	
 <!-- ////////////////////////////////// -->
@@ -471,18 +576,18 @@
 
 
 	function show() {
-	    for(item of arguments) {
-    		item.style.opacity = 1;
-    		item.style.zIndex = 1;
-    		item.disabled = false;
-	    }
+		for(item of arguments) {
+			item.style.opacity = 1;
+			item.style.zIndex = 1;
+			item.disabled = false;
+		}
 	}
 	function hide() {
-	    for(item of arguments) {
-    		item.style.opacity = 0;
-    		item.style.zIndex = -1;
-    		item.disabled = true;
-	    }
+		for(item of arguments) {
+			item.style.opacity = 0;
+			item.style.zIndex = -1;
+			item.disabled = true;
+		}
 	}
 
 	/**
@@ -505,10 +610,7 @@
 		}
 		
 		document.querySelectorAll(':not(#entry)').forEach(item => item.onmousedown = e => {
-		    if(gameActive){
-		        e.stopPropagation();
-		        e.preventDefault(); //keep focus on entry
-		    }
+			if(gameActive) setTimeout(() => entry.focus(), 10);
 		});
 
 		document.getElementById('CSW21').onclick = function () {
@@ -593,14 +695,17 @@
 		show(document.getElementById('score'));
 		show(document.getElementById('accuracy'));
 		hide(slider, recap);
-		entry.focus();
 
 		gameActive = true;
+		setTimeout(() => entry.focus(), 1000);
+
 		score = 0,
 		accuracy = [0, 0];
 		document.getElementById('score').innerHTML = 'Score<br>' + score;
 		document.getElementById('accuracy').innerHTML = 'Accuracy<br>--';
-		
+		document.getElementById('cow').classList.add('animate-shoulder');
+		document.getElementById('box').classList.add('animate-shoulder');
+					
 		button.innerHTML = "Loading...";
 		button.disabled = true;
 		loadLexicon(wordlist).then(() => {
@@ -622,7 +727,6 @@
 	 * 
 	 */
 	function pause() {
-		
 		/* to implement later */
 	}
 	
@@ -768,6 +872,7 @@
 		document.getElementById('timer').style.backgroundColor = 'rgb(0, 153, 0)';
 		document.querySelectorAll('.start-item').forEach(item => show(item));
 		document.querySelectorAll('.game-item').forEach(item => hide(item));
+		document.getElementById('box').classList.remove('animate-shoulder');
 		
 		entry.value = '';
 		hide(entry);
@@ -791,7 +896,7 @@
 		fetch(file, { method: 'POST', body: JSON.stringify(gameData) })
 			.then(response => response.text())
 			.then(text => {
-			    const json = JSON.parse(text);
+				const json = JSON.parse(text);
 
 				for(let i = 0; i < json.length; i++) {
 					plates[i].histogramData = json[i].slice(2);
@@ -840,7 +945,7 @@
 				}
 
 			recap.style.zIndex = 3;
-            slider.style.zIndex = 3;
+			slider.style.zIndex = 3;
 			});
 	}
 
@@ -853,7 +958,7 @@
 		if(points >= 0) {
 			plate.score += points;
 			const scoreAlert = document.createElement('div');
-			scoreAlert.className = 'scoreAlert';
+			scoreAlert.className = 'score-alert';
 			scoreAlert.innerHTML = '+' + points;
 			plate.frame.appendChild(scoreAlert);
 			
@@ -913,7 +1018,7 @@
 	 *
 	 */
 	function slide(value) {
-	    console.log(value)
+		console.log(value)
 		recap.scrollTop = (recap.scrollHeight - recap.clientHeight)*value/100;
 	}
 
@@ -940,19 +1045,20 @@
 		</div>
 		
 		<table id="how-to" class='start-item'>
-		    <tr><th colspan="2">How to play</th>                                    </tr>
-		    <tr><td colspan ="2">Make words using the given letters in order</td></tr>	
-			<tr><td>Any valid word</td>                             <td>+1 point</td></tr>
-			<tr><td>Shortest possible word</td>                     <td>+2 points</td></tr>
-			<tr><td>Shortest and first alphabetically</td>          <td>+3 points</td></tr>
+			<tr><th colspan="2">How to play</th>									</tr>
+			<tr><td colspan ="2">Make words using the given letters in order	</td></tr>	
+			<tr><td>Any valid word</td>								<td>+1 point</td></tr>
+			<tr><td>Shortest possible word</td>						<td>+2 points</td></tr>
+			<tr><td>Shortest and first alphabetically</td>			<td>+3 points</td></tr>
 		</table>
 	 
 		<button id="start-button" onclick='startGame()'>Start game</button>
 		<label id='notification-area' class='start-item'></label>
-		<input id="entry" type="text" placeholder="Enter a word" onfocus="this.value=''; this.placeholder=''">
+		<input id="entry" type="text">
 		<label id='timer' class='game-item'>5:00</label>
 		<label id='score' class='hidden'>Score<br>0</label>		
 		<label id='accuracy' class='hidden'>Accuracy<br>--</label>
+
 	</div>
 	
 	<svg id='backdrop' viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -963,8 +1069,30 @@
 		<polygon class='shoulder' points="0,100 0,50 50,50 100,100 100,50 50,50" fill='green'/>
 		<polygon class='dash' points="49.5,75 50.5,75 51,100 49, 100" fill='rgb(240, 241, 234)'/>
 		<polygon class='dash delayed' points="49.5,75 50.5,75 51,100 49, 100" fill='rgb(240, 241, 234)'/>
+
 	</svg>
 
+	<div id="box">
+		<img id="cow" src="images/cow.png"/>	
+		
+	 	<div id="links">
+			<a id="woogles" href="https://woogles.io" target="_blank">
+				<div id="woogles-rect">
+					<div id="woogles-w">W</div>
+				</div>
+				<div id="woogles-name">Woogles.io</div>
+			</a>
+	
+			<a id="anagrams" href="https://www.seattlephysicstutor.com/anagrams.html" target="_blank">
+				<div id="anagrams-name">Anagrams</div>
+				<div id="anagrams-rect">
+					<div id="anagrams-a">A</div>
+				</div>
+			</a>
+		</div>
+	</div>
+
+	
 	<div id="recap" class="hidden"></div>
 	<input id="slider" class="hidden" type="range" min="1" max="100" value="1" oninput='slide(value)'>
 
