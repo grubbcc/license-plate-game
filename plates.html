@@ -20,13 +20,12 @@
 	}
 	
 	#container {
-				width: 100vw;
+		width: 100vw;
 		height: 100vh;
-perspective: 50px;
+        perspective: 50px;
 		-ms-overflow-style: none;
 		scrollbar-width: none;
 		overflow: hidden;
-
 	}
 	
 	#controls {
@@ -191,13 +190,25 @@ perspective: 50px;
 		font-size: 36px;
 	}
 	
-	#box {
+	#link-box {
 		position: absolute;
-		transform: translateX(100vw) translateY(100vh) translate(450px,-300px) translateZ(-200px);
+		overflow: hidden;
+		transform: translateX(100vw) translateY(100vh) translate(600px,-300px) translateZ(-200px);
 		animation-timing-function: cubic-bezier(1, 0, 1, .5);
 		animation-iteration-count: 1;
 		animation-fill-mode: forwards;
 		animation-duration: 2s;	
+	}
+	
+	#cow-pen {
+		width: 900px;
+		height: 600px;
+		animation: reveal 2s ease;
+	}
+	
+	@keyframes reveal {
+		from {transform: translateY(600px); }
+		to {transform: translateY(0); } 
 	}
 	
 	#links {
@@ -482,8 +493,8 @@ perspective: 50px;
 	.paused { animation-play-state: paused; }
 	
 	@keyframes approach-shoulder {
-		from {transform: translateX(100vw) translateY(100vh) translate(450px,-300px) translateZ(-200px) rotateY(0);}
-		to { transform: translateX(100vw) translateY(100vh) translate(450px,-300px) translateZ(100px) rotateY(-0.01turn); }
+		from {transform: translateX(100vw) translateY(100vh) translate(600px,-300px) translateZ(-200px) rotateY(0);}
+		to { transform: translateX(100vw) translateY(100vh) translate(600px,-300px) translateZ(100px) rotateY(-0.01turn); }
 	}
 	
 	@keyframes approach-center {
@@ -703,17 +714,16 @@ perspective: 50px;
 		accuracy = [0, 0];
 		document.getElementById('score').innerHTML = 'Score<br>' + score;
 		document.getElementById('accuracy').innerHTML = 'Accuracy<br>--';
-		document.getElementById('cow').classList.add('animate-shoulder');
-		document.getElementById('box').classList.add('animate-shoulder');
 					
 		button.innerHTML = "Loading...";
 		button.disabled = true;
 		loadLexicon(wordlist).then(() => {
 			hide(button);
 			show(entry);
-			
+			document.getElementById('cow').classList.add('animate-shoulder');
+		    document.getElementById('link-box').classList.add('animate-shoulder');
 			nextPlate('animate-left');
-			setTimeout(() => loopLeft(), Math.round(4000*Math.random()) + 4000);
+			setTimeout(() => loopLeft(), Math.round(4000*Math.random()) + 3000);
 			setTimeout(() => loopRight(), Math.round(4000*Math.random()));
 		//	loopSigns();
 			
@@ -872,7 +882,10 @@ perspective: 50px;
 		document.getElementById('timer').style.backgroundColor = 'rgb(0, 153, 0)';
 		document.querySelectorAll('.start-item').forEach(item => show(item));
 		document.querySelectorAll('.game-item').forEach(item => hide(item));
-		document.getElementById('box').classList.remove('animate-shoulder');
+		const cow = document.getElementById('link-box');
+        const newCow = cow.cloneNode(true);
+        newCow.classList = "";
+        cow.parentNode.replaceChild(newCow, cow);
 		
 		entry.value = '';
 		hide(entry);
@@ -1072,26 +1085,27 @@ perspective: 50px;
 
 	</svg>
 
-	<div id="box">
-		<img id="cow" src="images/cow.png"/>	
-		
-	 	<div id="links">
-			<a id="woogles" href="https://woogles.io" target="_blank">
-				<div id="woogles-rect">
-					<div id="woogles-w">W</div>
-				</div>
-				<div id="woogles-name">Woogles.io</div>
-			</a>
-	
-			<a id="anagrams" href="https://www.seattlephysicstutor.com/anagrams.html" target="_blank">
-				<div id="anagrams-name">Anagrams</div>
-				<div id="anagrams-rect">
-					<div id="anagrams-a">A</div>
-				</div>
-			</a>
-		</div>
-	</div>
-
+	<div id="link-box">
+        <div id="cow-pen" class="reveal">
+    		<img id="cow" src="images/cow.png"/>	
+    		
+    	 	<div id="links">
+    			<a id="woogles" href="https://woogles.io" target="_blank">
+    				<div id="woogles-rect">
+    					<div id="woogles-w">W</div>
+    				</div>
+    				<div id="woogles-name">Woogles.io</div>
+    			</a>
+    	
+    			<a id="anagrams" href="https://www.seattlephysicstutor.com/anagrams.html" target="_blank">
+    				<div id="anagrams-name">Anagrams</div>
+    				<div id="anagrams-rect">
+    					<div id="anagrams-a">A</div>
+    				</div>
+    			</a>
+    		</div>
+    	</div>
+    </div>
 	
 	<div id="recap" class="hidden"></div>
 	<input id="slider" class="hidden" type="range" min="1" max="100" value="1" oninput='slide(value)'>
