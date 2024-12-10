@@ -22,7 +22,7 @@
 	#container {
 		width: 100vw;
 		height: 100vh;
-        perspective: 50px;
+        	perspective: 50px;
 		-ms-overflow-style: none;
 		scrollbar-width: none;
 		overflow: hidden;
@@ -369,11 +369,11 @@
 		font-size: 32px;
 		background: rgba(0,0,0,0.1);
 		color: white;
-		width: 470px;
+		width: 507px;
 		height: 44vh;
 		position: absolute;
 		display: grid;
-		grid-template-columns: 100px 280px 30px;
+		grid-template-columns: 100px 320px 30px;
 		grid-auto-rows: 50px;
 		justify-items: center;
 		align-items: center;
@@ -404,7 +404,6 @@
 	}
 	
 	#recap > span {
-		left: 0px;
 		position: relative;
 	}
 	
@@ -421,9 +420,9 @@
 		transform: rotate(90deg);
 		position: absolute;
 		top: 50vh;
-		left: calc(50vw + 227px);
+		left: calc(50vw + 247px);
 		-webkit-appearance: none;
-		width: 44vh;
+		width: calc(44vh + 5px);
 		height: 15px;
 		background: rgba(0,0,0,0.2);
 		outline: none;
@@ -561,8 +560,8 @@
 
 <script>
 
-	const topPlays = new Map();
-	const lexicon = new Trie();
+	const topPlays = new Map(),
+              lexicon = new Trie();
 	let button,
 		entry,
 		recap,
@@ -571,9 +570,9 @@
 		plates = [],
 		gameActive = false,
 		score = 0,
-		accuracy = [0, 0];
+        maxScore = 0;
 		
-	fetch("plates.json", {cache: "no-store"})
+	fetch("plates.json")
 		.then(response => response.json())
 		.then(data => plateData = data)
 		.then(() => {
@@ -606,13 +605,14 @@
 	 */
 	window.onload = function() {
 
-		document.querySelectorAll('.start-item').forEach(item => show(item));
-		document.querySelectorAll('.game-item').forEach(item => hide(item));
-
 		entry = document.getElementById('entry');			
 		button = document.getElementById('start-button');
 		recap = document.getElementById('recap');
 		slider = document.getElementById('slider');
+
+		document.querySelectorAll('.start-item').forEach(item => show(item));
+		document.querySelectorAll('.game-item').forEach(item => hide(item));
+		show(button);
 
 		recap.onwheel = event => {
 			event.preventDefault();
@@ -624,14 +624,14 @@
 			if(gameActive) setTimeout(() => entry.focus(), 10);
 		});
 
-		document.getElementById('CSW21').onclick = function () {
+		document.getElementById('CSW24').onclick = function () {
 			document.getElementById('copyright').innerHTML = 'Collins Official Scrabble Words,<br>an imprint of HarperCollins Publishers Limited.';
 		}
-		document.getElementById('NWL20').onclick = function () {
-			document.getElementById('copyright').innerHTML = 'NASPA Word List, 2020 Edition,<br>© 2020 North American Word Game Players Association.';
+		document.getElementById('NWL23').onclick = function () {
+			document.getElementById('copyright').innerHTML = 'NASPA Word List, 2023 Edition,<br>© 2023 North American Word Game Players Association.';
 		}
 		document.getElementById('CEL').onclick = function () {
-			document.getElementById('copyright').innerHTML = 'Common English Lexicon, a subset of CSW21,<br> by Eric Smith and Kenji Matsumoto.';
+			document.getElementById('copyright').innerHTML = 'Common English Lexicon, a subset of CSW24,<br> by Eric Smith and Kenji Matsumoto.';
 		}
 		
 		document.querySelector('input[name="lexicon"]:checked').onclick.apply(this);
@@ -650,13 +650,15 @@
 	 */
 	async function loadLexicon(wordlist) {
 		
-		await fetch("/dict/" + wordlist + "-top-plays.json")
+		const getTopPlays = fetch("/dict/" + wordlist + "-top-plays.json")
 			.then(response => response.json())
 			.then(data => Object.keys(data).forEach(key => topPlays.set(key, data[key])));
 
-		await fetch(new Request('/dict/' + wordlist +'.json'))
+		const buildTrie = fetch(new Request('/dict/' + wordlist +'.json'))
 			.then(response => response.json())
 			.then(data => data.forEach(item => lexicon.insert(item)));
+			
+		await Promise.all([getTopPlays, buildTrie]);
 	}
 		
 
@@ -702,7 +704,7 @@
 
 		document.querySelectorAll('.game-item').forEach(item => show(item));
 		document.querySelectorAll('.start-item').forEach(item => hide(item));
-		
+	
 		show(document.getElementById('score'));
 		show(document.getElementById('accuracy'));
 		hide(slider, recap);
@@ -710,8 +712,9 @@
 		gameActive = true;
 		setTimeout(() => entry.focus(), 1000);
 
-		score = 0,
-		accuracy = [0, 0];
+		score = 0;
+		maxScore = 0;
+		
 		document.getElementById('score').innerHTML = 'Score<br>' + score;
 		document.getElementById('accuracy').innerHTML = 'Accuracy<br>--';
 					
@@ -721,7 +724,7 @@
 			hide(button);
 			show(entry);
 			document.getElementById('cow').classList.add('animate-shoulder');
-		    document.getElementById('link-box').classList.add('animate-shoulder');
+			document.getElementById('link-box').classList.add('animate-shoulder');
 			nextPlate('animate-left');
 			setTimeout(() => loopLeft(), Math.round(4000*Math.random()) + 3000);
 			setTimeout(() => loopRight(), Math.round(4000*Math.random()));
@@ -765,7 +768,7 @@
 				if(secsLeft <= 15) {
 					document.getElementById('timer').style.backgroundColor = secsLeft % 2 === 0 ? 'rgb(248, 186, 5)' : 'rgb(255, 102, 0)';
 				}
-				if(secsLeft <= 5) {
+				if(secsLeft <= 6) {
 					gameActive = false;
 				}
 			}
@@ -796,8 +799,7 @@
 		setTimeout(function() {
 			frame.remove();
 			nextPlate.connected = false;
-			accuracy[1] += 3;
-			document.getElementById('accuracy').innerHTML = 'Accuracy<br>' + Math.round(100*accuracy[0]/accuracy[1]) + '%';
+            		nextPlate.doAccuracy();
 		}, 17000);
 	}
 	
@@ -812,6 +814,7 @@
 		bestPlay;
 		score = 0;
 		connected = true;
+		scored = false;
 		histogramData = [0,0,0,0];
 		
 		/**
@@ -846,10 +849,42 @@
 			this.frame.appendChild(this.lettering);
 			return this.frame;
 		}
+
+    	/**
+    	 */
+    	doScore(points) {
+    		if(points >= 0) {
+    			plate.score += points;
+    			const scoreAlert = document.createElement('div');
+    			scoreAlert.className = 'score-alert';
+    			scoreAlert.innerHTML = '+' + points;
+    			plate.frame.appendChild(scoreAlert);
+    			
+    			score += points;
+    
+    			document.getElementById('score').innerHTML = 'Score<br>' + score;
+    			
+    			setTimeout(function() {
+    				scoreAlert.remove();
+    			}, 3000);
+    		}
+    	}
+		
+
+    	/**
+    	 */
+    	doAccuracy() {
+    	    if(!this.scored) {
+    	        this.scored = true;
+                maxScore += 3;
+        		document.getElementById('accuracy').innerHTML = 'Accuracy<br>' + Math.round(100*score/maxScore) + '%';
+    	    }
+    	}
 		
 		/**
 		 */
 		explode() {
+		    this.connected = false;
 			if(this.image === null) return;
 			this.image.zIndex = 0;
 			let target = new ImgExplode(this.image);
@@ -868,9 +903,9 @@
 				gravity: 5,
 				groundDistance: 10,
 			});
-
 		}
 	}
+
 
 	
 	/**
@@ -883,9 +918,9 @@
 		document.querySelectorAll('.start-item').forEach(item => show(item));
 		document.querySelectorAll('.game-item').forEach(item => hide(item));
 		const cow = document.getElementById('link-box');
-        const newCow = cow.cloneNode(true);
-        newCow.classList = "";
-        cow.parentNode.replaceChild(newCow, cow);
+        	const newCow = cow.cloneNode(true);
+        	newCow.classList = "";
+        	cow.parentNode.replaceChild(newCow, cow);
 		
 		entry.value = '';
 		hide(entry);
@@ -895,6 +930,7 @@
 
 		for(const plate of plates) {
 			plate.explode();
+			plate.doAccuracy();
 		}
 
 		button.innerHTML = 'Play again';
@@ -912,7 +948,7 @@
 				const json = JSON.parse(text);
 
 				for(let i = 0; i < json.length; i++) {
-					plates[i].histogramData = json[i].slice(2);
+					plates[i].histogramData = json[i].slice(2, 6);
 				}
 			})
 			.catch(() => console.log("could not connect to database"))
@@ -929,9 +965,22 @@
 					const yourScore = document.createElement('span');
 					yourScore.style.color = 'orange';
 					yourScore.innerHTML = "+" + plate.score;
-					
+					const sup = document.createElement("sup")
+
+					bestPlay.appendChild(sup);
 					//histogram
-					const data = plate.histogramData;
+					const data = plate.histogramData.map(Number);
+				
+					if(plate.score === 3) {
+	    					const total = data.reduce((a,b) => a + b);
+	    					if(total >= 5) {
+							const exp = (data[1] + 2*data[2] + 3*(data[3] - 1))/(total-1);
+	                            			if(data[3]/total < 0.1 || exp < 1) {
+			    			        	sup.innerHTML = "⭐";
+	                            			}
+	    					}
+					}
+										
 					if(Math.max(...data) > 0) {
 						const svgWidth = 70, svgHeight = 40, padding = 2, barWidth = 15;
 						const histogram = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -962,30 +1011,6 @@
 			});
 	}
 
-	
-	
-	/**
-	 * 
-	 */
-	function doScore(plate, points) {
-		if(points >= 0) {
-			plate.score += points;
-			const scoreAlert = document.createElement('div');
-			scoreAlert.className = 'score-alert';
-			scoreAlert.innerHTML = '+' + points;
-			plate.frame.appendChild(scoreAlert);
-			
-			score += points;
-			accuracy[0] += points;
-			document.getElementById('score').innerHTML = 'Score<br>' + score;
-			
-			setTimeout(function() {
-				scoreAlert.remove();
-			}, 3000);
-		}
-	}
-		
-
 
 	/**
 	 * 
@@ -1012,15 +1037,16 @@
 				if(!plate.connected) continue;
 				if(plate.bestPlay === entry.toUpperCase()) {
 					const target = plate;
-					doScore(plate, 3 - plate.score); 		//best play
+					plate.doScore(3 - plate.score); 		//best play
 					setTimeout(() => target.explode(), 300);
+					plate.doAccuracy();
 				}
 				else if(matches(plate.chars, entry.toUpperCase())) {
 					if(plate.bestPlay.length === entry.length) {	
-						doScore(plate, 2 - plate.score);	//shortest play
+						plate.doScore(2 - plate.score);	//shortest play
 					}
 					else { 											
-						doScore(plate, 1 - plate.score);	//valid play
+						plate.doScore(1 - plate.score);	//valid play
 					}
 				}
 			}
@@ -1031,7 +1057,6 @@
 	 *
 	 */
 	function slide(value) {
-		console.log(value)
 		recap.scrollTop = (recap.scrollHeight - recap.clientHeight)*value/100;
 	}
 
@@ -1048,10 +1073,10 @@
 		<label id="name-of-game" class ='start-item'>License to Spell</label>
 		<div id='lexicon-chooser' class='start-item'>
 			Word list:<br>
-			<input id="CSW21" type="radio" name="lexicon" value="CSW21" checked="checked">
-			<label for="words">CSW21</label>
-			<input id="NWL20" type="radio" name="lexicon" value="NWL20">
-			<label for="words">NWL20</label>
+			<input id="CSW24" type="radio" name="lexicon" value="CSW24" checked="checked">
+			<label for="words">CSW24</label>
+			<input id="NWL23" type="radio" name="lexicon" value="NWL23">
+			<label for="words">NWL23</label>
 			<input id="CEL" type="radio" name="lexicon" value="CEL">
 			<label for="words">Common words</label>
 			<p id='copyright'></p>
@@ -1064,10 +1089,10 @@
 			<tr><td>Shortest possible word</td>						<td>+2 points</td></tr>
 			<tr><td>Shortest and first alphabetically</td>			<td>+3 points</td></tr>
 		</table>
-	 
-		<button id="start-button" onclick='startGame()'>Start game</button>
+	 		button.innerHTML = "";
+		<button id="start-button" class='hidden' onclick='startGame()'>Start game</button>
 		<label id='notification-area' class='start-item'></label>
-		<input id="entry" type="text">
+		<input id="entry" type="text" autocomplete="off">
 		<label id='timer' class='game-item'>5:00</label>
 		<label id='score' class='hidden'>Score<br>0</label>		
 		<label id='accuracy' class='hidden'>Accuracy<br>--</label>
